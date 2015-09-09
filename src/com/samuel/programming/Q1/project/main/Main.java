@@ -10,6 +10,7 @@ public class Main {
 	
 	public Main(){
 		System.out.println("The name of this project is " + Reference.projectName);
+		System.out.println("Version: " + Reference.version);
 	}
 
 }
