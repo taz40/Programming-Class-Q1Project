@@ -6,15 +6,16 @@ import io.brace.lightsoutgaming.engine.LightsOut;
 import java.util.ArrayList;
 
 import com.samuel.programming.Q1.project.Entities.Turret;
+import com.samuel.programming.Q1.project.Utils.Timer;
 import com.samuel.programming.Q1.project.references.Reference;
 
 public class Main extends LightsOut {
 	
-	float aspectRatio = 9f/16f;
 	int width = 900;
-	int height = (int) (width * aspectRatio);
-	Turret t = new Turret();
+	int height = (int) (width * Reference.aspectRatio);
+	Turret t = new Turret((width/2)-3*8, (height/2)-3*8);
 	public static ArrayList<Entity> entities = new ArrayList<Entity>();
+	Timer timer = new Timer();
 	
 	public static void main(String[] args){
 		new Main().init();
@@ -32,6 +33,7 @@ public class Main extends LightsOut {
 			e.render(screen);
 		}
 		show();
+		timer.render();
 	}
 
 	protected void update() {
@@ -39,6 +41,8 @@ public class Main extends LightsOut {
 			e.update();
 		}
 		t.update();
+		timer.update();
+		System.out.println(timer.fps + " fps, " + timer.ups + " ups");
 	}
 
 }

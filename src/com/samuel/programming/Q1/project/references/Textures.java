@@ -6,7 +6,7 @@ import io.brace.lightsoutgaming.engine.graphics.SpriteSheet;
 public class Textures {
 	
 	public static class SpriteSheets{
-		public static SpriteSheet sheet = new SpriteSheet("/sheet.png");
+		public static SpriteSheet sheet = new SpriteSheet("/Turret.png");
 	}
 	
 	public static class Entities{

@@ -21,8 +21,8 @@ public class Bullet extends Entity {
 
 	public void update() {
 		// TODO Auto-generated method stub
-		x += mx*(1/60);
-		y += my*(1/60);
+		x += mx*(1f/60f);
+		y += my*(1f/60f);
 	}
 
 	public void render(Screen s) {
