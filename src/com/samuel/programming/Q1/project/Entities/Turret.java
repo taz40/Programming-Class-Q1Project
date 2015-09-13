@@ -34,7 +34,6 @@ public class Turret extends Entity {
 	}
 	
 	public void Shoot(){
-		System.out.println("Bang");
 		double angle = Math.atan2(y-Mouse.mouseY, x-Mouse.mouseX)+Math.PI;
 		Main.entities.add(new Bullet(x,y,speed * (float)Math.cos(angle),speed*(float)Math.sin(angle),(float)Math.toDegrees(angle)));
 	}
