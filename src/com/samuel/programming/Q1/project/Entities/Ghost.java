@@ -22,25 +22,31 @@ public class Ghost extends Entity {
 		this.y = y*3*16;
 		this.l = l;
 		passable = new boolean[l.width][l.height];
+		for(int mx = 0; mx < l.width; mx++){
+			for(int my = 0; my < l.height; my++){
+				passable[mx][my] = l.sprites[mx][my] != Textures.Void;
+			}
+		}
 	}
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		if(tileX < l.width-1 && l.sprites[tileX+1][tileY] != Textures.Void){
+		if(tileX < l.width-1 && passable[tileX+1][tileY]){
 			x += speed*(1f/60f);
 		}
-		if(tileX > 0 && l.sprites[tileX-1][tileY] != Textures.Void){
+		if(tileX > 0 && passable[tileX-1][tileY]){
 			x -= speed*(1f/60f);
 		}
-		if(tileY < l.height-1 && l.sprites[tileX][tileY+1] != Textures.Void){
+		if(tileY < l.height-1 && passable[tileX][tileY+1]){
 			y += speed*(1f/60f);
 		}
-		if(tileY > 0 && l.sprites[tileX][tileY-1] != Textures.Void){
+		if(tileY > 0 && passable[tileX][tileY-1]){
 			y -= speed*(1f/60f);
 		}
-		tileX = (int) (x/3f/16f);
-		tileY = (int) (y/3f/16f);
+		passable[tileX][tileY] = false;
+		tileX = Math.round(((x+3*8)/(3f*16f)));
+		tileY = Math.round(((y+3*8)/(3f*16f)));
 		System.out.println(tileX + ", " + tileY);
 	}
 
