@@ -1,21 +1,25 @@
 package com.samuel.programming.Q1.project.Level;
 
+import io.brace.lightsoutgaming.engine.graphics.Screen;
+import io.brace.lightsoutgaming.engine.graphics.Sprite;
+import io.brace.lightsoutgaming.engine.graphics.SpriteSheet;
+
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
 import com.samuel.programming.Q1.project.references.Textures;
 
-import io.brace.lightsoutgaming.engine.graphics.Screen;
-import io.brace.lightsoutgaming.engine.graphics.Sprite;
-import io.brace.lightsoutgaming.engine.graphics.SpriteSheet;
-
 public class Level {
 	
 	String path;
-	Sprite[][] sprites;
-	int width, height;
+	public Sprite[][] sprites;
+	public int width, height;
+	public int spawnX, spawnY, endX, endY;
 	
 	public Level(String path){
 		this.path = path;
@@ -24,7 +28,7 @@ public class Level {
 	
 	public void loadLevel(){
 		try {
-			BufferedImage image = ImageIO.read(SpriteSheet.class.getResource(path));
+			BufferedImage image = ImageIO.read(SpriteSheet.class.getResource(path+".png"));
 			width = image.getWidth();
 			height = image.getHeight();
 			sprites = new Sprite[image.getWidth()][image.getHeight()];
@@ -61,6 +65,11 @@ public class Level {
 					}
 				}
 			}
+			BufferedReader reader = new BufferedReader(new FileReader(SpriteSheet.class.getResource(path+".lvl").getPath()));
+			spawnX = Integer.parseInt(reader.readLine());
+			spawnY = Integer.parseInt(reader.readLine());
+			endX = Integer.parseInt(reader.readLine());
+			endY = Integer.parseInt(reader.readLine());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

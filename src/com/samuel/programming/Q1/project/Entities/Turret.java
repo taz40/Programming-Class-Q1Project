@@ -29,12 +29,12 @@ public class Turret extends Entity {
 	public void render(Screen s) {
 		// TODO Auto-generated method stub
 		s.renderSprite(x, y, Textures.Entities.Turret.base, true);
-		Sprite turretRot = Textures.Entities.Turret.turret.rotate(Math.toDegrees(Math.atan2(y-Mouse.mouseY, x-Mouse.mouseX))+180);
+		Sprite turretRot = Textures.Entities.Turret.turret.rotate(Math.toDegrees(Math.atan2((y+8*3)-Mouse.mouseY, (x+8*3)-Mouse.mouseX))+180);
 		s.renderSprite(x,y,turretRot,true);
 	}
 	
 	public void Shoot(){
-		double angle = Math.atan2(y-Mouse.mouseY, x-Mouse.mouseX)+Math.PI;
+		double angle = Math.atan2((y+3*8)-Mouse.mouseY, (x+3*8)-Mouse.mouseX)+Math.PI;
 		Main.entities.add(new Bullet(x,y,speed * (float)Math.cos(angle),speed*(float)Math.sin(angle),(float)Math.toDegrees(angle)));
 	}
 

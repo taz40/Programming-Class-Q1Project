@@ -11,17 +11,18 @@ public class Textures {
 		Void.pixels[0] = 0xffff00ff;
 	}
 	public static class SpriteSheets{
-		public static SpriteSheet sheet = new SpriteSheet("/Textures/Turret.png");
+		public static SpriteSheet turret = new SpriteSheet("/Textures/Turret.png");
 		public static SpriteSheet terrain = new SpriteSheet("/Textures/Terrain.png");
+		public static SpriteSheet enemies = new SpriteSheet("/Textures/enemies.png");
 	}
 	
 	public static class Entities{
 		public static class Turret{
-			public static Sprite base = new Sprite(0,0,3,16,16,Textures.SpriteSheets.sheet);
-			public static Sprite turret = new Sprite(1,0,3,16,16,Textures.SpriteSheets.sheet);
+			public static Sprite base = new Sprite(0,0,3,16,16,Textures.SpriteSheets.turret);
+			public static Sprite turret = new Sprite(1,0,3,16,16,Textures.SpriteSheets.turret);
 		}
 		public static class Projectiles{
-			public static Sprite bullet = new Sprite(0,1,3,16,16,Textures.SpriteSheets.sheet);
+			public static Sprite bullet = new Sprite(0,1,3,16,16,Textures.SpriteSheets.turret);
 		}
 	}
 	
@@ -32,6 +33,10 @@ public class Textures {
 		public static Sprite roadCornerDL = new Sprite(3,0,3,16,16,Textures.SpriteSheets.terrain);
 		public static Sprite roadCornerUL = new Sprite(4,0,3,16,16,Textures.SpriteSheets.terrain);
 		public static Sprite roadCornerUR = new Sprite(5,0,3,16,16,Textures.SpriteSheets.terrain);
+	}
+	
+	public static class Enemies{
+		public static Sprite ghost = new Sprite(0,0,3,16,16,Textures.SpriteSheets.enemies);
 	}
 
 }
