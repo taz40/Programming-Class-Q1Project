@@ -9,33 +9,20 @@ import com.samuel.programming.Q1.project.Entities.Projectiles.Bullet;
 import com.samuel.programming.Q1.project.Scenes.GameScene;
 import com.samuel.programming.Q1.project.references.Textures;
 
-public class Turret extends Entity {
+public abstract class Turret extends Entity {
 	
-	float speed = 100.0f;
+	int range;
 	
-	public Turret(int x, int y){
+	public Turret(int x, int y, int range){
 		this.x = x;
 		this.y = y;
+		this.range = range;
 	}
 
-	public void update() {
-		// TODO Auto-generated method stub
-		if(Mouse.button == 1){
-			Mouse.button = 0;
-			Shoot();
-		}
-	}
+	public abstract void update();
 
-	public void render(Screen s) {
-		// TODO Auto-generated method stub
-		s.renderSprite(x, y, Textures.Entities.Turret.base, true);
-		Sprite turretRot = Textures.Entities.Turret.turret.rotate(Math.toDegrees(Math.atan2((y+8*3)-Mouse.mouseY, (x+8*3)-Mouse.mouseX))+180);
-		s.renderSprite(x,y,turretRot,true);
-	}
+	public abstract void render(Screen s);
 	
-	public void Shoot(){
-		double angle = Math.atan2((y+3*8)-Mouse.mouseY, (x+3*8)-Mouse.mouseX)+Math.PI;
-		GameScene.entities.add(new Bullet(x,y,speed * (float)Math.cos(angle),speed*(float)Math.sin(angle),(float)Math.toDegrees(angle)));
-	}
+	public abstract void Shoot();
 
 }

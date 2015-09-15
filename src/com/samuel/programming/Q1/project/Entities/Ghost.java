@@ -8,9 +8,11 @@ import com.samuel.programming.Q1.project.references.Textures;
 
 public class Ghost extends Entity {
 	
+	public int tilesTraveled = 0;
+	
 	Level l;
 	int tileX, tileY;
-	float speed = 50;
+	public float speed = 50;
 	float x, y;
 	float nextX, nextY;
 	
@@ -35,19 +37,23 @@ public class Ghost extends Entity {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		if(Math.abs(x-nextX) <= 1f && Math.abs(y-nextY) <= 1f){
+		if(Math.abs(x-nextX) <= 5f && Math.abs(y-nextY) <= 5f){
 			if(tileX < l.width-1 && passable[tileX+1][tileY]){
 				passable[tileX][tileY] = false;
 				tileX++;
+				tilesTraveled++;
 			}else if(tileX > 0 && passable[tileX-1][tileY]){
 				passable[tileX][tileY] = false;
 				tileX--;
+				tilesTraveled++;
 			}else if(tileY < l.height-1 && passable[tileX][tileY+1]){
 				passable[tileX][tileY] = false;
 				tileY++;
+				tilesTraveled++;
 			}else if(tileY > 0 && passable[tileX][tileY-1]){
 				passable[tileX][tileY] = false;
 				tileY--;
+				tilesTraveled++;
 			}
 			nextX = (tileX*3*16);
 			nextY = (tileY*3*16);
@@ -65,6 +71,8 @@ public class Ghost extends Entity {
 		if(y < nextY){
 			y += speed*(1f/60f);
 		}
+		super.x = (int)x;
+		super.y = (int)y;
 	}
 
 	@Override
