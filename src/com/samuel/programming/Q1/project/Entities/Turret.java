@@ -6,7 +6,7 @@ import io.brace.lightsoutgaming.engine.graphics.Sprite;
 import io.brace.lightsoutgaming.engine.input.Mouse;
 
 import com.samuel.programming.Q1.project.Entities.Projectiles.Bullet;
-import com.samuel.programming.Q1.project.main.Main;
+import com.samuel.programming.Q1.project.Scenes.GameScene;
 import com.samuel.programming.Q1.project.references.Textures;
 
 public class Turret extends Entity {
@@ -35,7 +35,7 @@ public class Turret extends Entity {
 	
 	public void Shoot(){
 		double angle = Math.atan2((y+3*8)-Mouse.mouseY, (x+3*8)-Mouse.mouseX)+Math.PI;
-		Main.entities.add(new Bullet(x,y,speed * (float)Math.cos(angle),speed*(float)Math.sin(angle),(float)Math.toDegrees(angle)));
+		GameScene.entities.add(new Bullet(x,y,speed * (float)Math.cos(angle),speed*(float)Math.sin(angle),(float)Math.toDegrees(angle)));
 	}
 
 }

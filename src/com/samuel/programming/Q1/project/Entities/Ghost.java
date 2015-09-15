@@ -12,6 +12,7 @@ public class Ghost extends Entity {
 	int tileX, tileY;
 	float speed = 50;
 	float x, y;
+	float nextX, nextY;
 	
 	boolean passable[][];
 	
@@ -22,6 +23,8 @@ public class Ghost extends Entity {
 		this.y = y*3*16;
 		this.l = l;
 		passable = new boolean[l.width][l.height];
+		nextX = (tileX*3*16);
+		nextY = (tileY*3*16);
 		for(int mx = 0; mx < l.width; mx++){
 			for(int my = 0; my < l.height; my++){
 				passable[mx][my] = l.sprites[mx][my] != Textures.Void;
@@ -32,22 +35,36 @@ public class Ghost extends Entity {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		if(tileX < l.width-1 && passable[tileX+1][tileY]){
-			x += speed*(1f/60f);
+		if(Math.abs(x-nextX) <= 1f && Math.abs(y-nextY) <= 1f){
+			if(tileX < l.width-1 && passable[tileX+1][tileY]){
+				passable[tileX][tileY] = false;
+				tileX++;
+			}else if(tileX > 0 && passable[tileX-1][tileY]){
+				passable[tileX][tileY] = false;
+				tileX--;
+			}else if(tileY < l.height-1 && passable[tileX][tileY+1]){
+				passable[tileX][tileY] = false;
+				tileY++;
+			}else if(tileY > 0 && passable[tileX][tileY-1]){
+				passable[tileX][tileY] = false;
+				tileY--;
+			}
+			nextX = (tileX*3*16);
+			nextY = (tileY*3*16);
 		}
-		if(tileX > 0 && passable[tileX-1][tileY]){
+		
+		if(x > nextX){
 			x -= speed*(1f/60f);
 		}
-		if(tileY < l.height-1 && passable[tileX][tileY+1]){
-			y += speed*(1f/60f);
+		if(x < nextX){
+			x += speed*(1f/60f);
 		}
-		if(tileY > 0 && passable[tileX][tileY-1]){
+		if(y > nextY){
 			y -= speed*(1f/60f);
 		}
-		passable[tileX][tileY] = false;
-		tileX = Math.round(((x+3*8)/(3f*16f)));
-		tileY = Math.round(((y+3*8)/(3f*16f)));
-		System.out.println(tileX + ", " + tileY);
+		if(y < nextY){
+			y += speed*(1f/60f);
+		}
 	}
 
 	@Override

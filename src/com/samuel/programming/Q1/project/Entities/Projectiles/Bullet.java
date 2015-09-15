@@ -1,10 +1,10 @@
 package com.samuel.programming.Q1.project.Entities.Projectiles;
 
-import com.samuel.programming.Q1.project.main.Main;
-import com.samuel.programming.Q1.project.references.Textures;
-
 import io.brace.lightsoutgaming.engine.Entity;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
+
+import com.samuel.programming.Q1.project.Scenes.GameScene;
+import com.samuel.programming.Q1.project.references.Textures;
 
 public class Bullet extends Entity {
 	
@@ -25,7 +25,7 @@ public class Bullet extends Entity {
 	public void update() {
 		// TODO Auto-generated method stub
 		if(timer >= lifeTime){
-			Main.entities.remove(this);
+			GameScene.entities.remove(this);
 		}else{
 			timer += (1f/60f);
 		}
