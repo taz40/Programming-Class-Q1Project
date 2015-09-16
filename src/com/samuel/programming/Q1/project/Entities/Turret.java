@@ -18,11 +18,19 @@ public abstract class Turret extends Entity {
 		this.y = y;
 		this.range = range;
 	}
+	
+	public double distance(Entity e){
+		return Math.sqrt(Math.abs(e.y - y)*Math.abs(e.y - y) + Math.abs(e.x - x)*Math.abs(e.x - x));
+	}
 
 	public abstract void update();
 
 	public abstract void render(Screen s);
 	
 	public abstract void Shoot();
+	
+	public abstract void selectedRender(Screen s);
+	
+	public abstract void selectedUpdate();
 
 }

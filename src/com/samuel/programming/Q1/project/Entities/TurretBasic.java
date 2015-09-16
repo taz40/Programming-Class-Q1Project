@@ -25,7 +25,7 @@ public class TurretBasic extends Turret {
 		Ghost target = null;
 		for(Entity e : GameScene.entities){
 			if(e instanceof Ghost){
-				if(target == null || ((Ghost)e).tilesTraveled > target.tilesTraveled)
+				if((target == null || ((Ghost)e).tilesTraveled > target.tilesTraveled) && distance(e) <= range)
 					target = (Ghost)e;
 			}
 		}
@@ -33,8 +33,10 @@ public class TurretBasic extends Turret {
 			angle = Math.atan2((y+8*3)-(target.y+8*3), (x+8*3)-(target.x+8*3))+Math.PI;
 		}
 		if(timer <= 0){
-			Shoot();
-			timer = coolDown;
+			if(target != null){
+				Shoot();
+				timer = coolDown;
+			}
 		}else{
 			timer -= Reference.fixedTime;
 		}
@@ -49,5 +51,15 @@ public class TurretBasic extends Turret {
 	
 	public void Shoot(){
 		GameScene.entities.add(new Bullet(x,y,speed * (float)Math.cos(angle),speed*(float)Math.sin(angle),(float)Math.toDegrees(angle)));
+	}
+
+	@Override
+	public void selectedRender(Screen s) {
+		
+	}
+
+	@Override
+	public void selectedUpdate() {
+		System.out.println("Selected!");
 	}
 }

@@ -6,5 +6,6 @@ public class Reference {
 	public static String version = "1.0 Alpha";
 	public static float aspectRatio = 1f/(16f/9f);
 	public static float fixedTime = (1f/60f);
+	public static int tileSize = 3*16;
 
 }
