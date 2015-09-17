@@ -15,6 +15,7 @@ public class TurretBasic extends Turret {
 	double angle = 0;
 	float coolDown = 1;
 	float timer = 0;
+	int dmg = 10;
 	
 	public TurretBasic(int x, int y){
 		super(x, y, 3*3*16);
@@ -50,7 +51,7 @@ public class TurretBasic extends Turret {
 	}
 	
 	public void Shoot(){
-		GameScene.entities.add(new Bullet(x,y,speed * (float)Math.cos(angle),speed*(float)Math.sin(angle),(float)Math.toDegrees(angle)));
+		GameScene.entities.add(new Bullet(x,y,speed * (float)Math.cos(angle),speed*(float)Math.sin(angle),(float)Math.toDegrees(angle), dmg));
 	}
 
 	@Override
@@ -61,5 +62,11 @@ public class TurretBasic extends Turret {
 	@Override
 	public void selectedUpdate() {
 		System.out.println("Selected!");
+	}
+
+	@Override
+	public Object clone() {
+		// TODO Auto-generated method stub
+		return new TurretBasic(x, y);
 	}
 }

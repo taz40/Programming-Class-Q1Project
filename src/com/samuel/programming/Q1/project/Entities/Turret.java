@@ -32,5 +32,7 @@ public abstract class Turret extends Entity {
 	public abstract void selectedRender(Screen s);
 	
 	public abstract void selectedUpdate();
+	
+	public abstract Object clone();
 
 }

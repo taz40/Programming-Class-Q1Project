@@ -4,6 +4,7 @@ import io.brace.lightsoutgaming.engine.Entity;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
 
 import com.samuel.programming.Q1.project.Level.Level;
+import com.samuel.programming.Q1.project.Scenes.GameScene;
 import com.samuel.programming.Q1.project.references.Textures;
 
 public class Ghost extends Entity {
@@ -15,15 +16,17 @@ public class Ghost extends Entity {
 	public float speed = 50;
 	float x, y;
 	float nextX, nextY;
+	int health;
 	
 	boolean passable[][];
 	
-	public Ghost(int x, int y, Level l){
+	public Ghost(int x, int y, Level l, int health){
 		tileX = x;
 		tileY = y;
 		this.x = x*3*16;
 		this.y = y*3*16;
 		this.l = l;
+		this.health = health;
 		passable = new boolean[l.width][l.height];
 		nextX = (tileX*3*16);
 		nextY = (tileY*3*16);
@@ -32,6 +35,10 @@ public class Ghost extends Entity {
 				passable[mx][my] = l.sprites[mx][my] != Textures.Void;
 			}
 		}
+	}
+	
+	public void doDmg(int amount){
+		health -= amount;
 	}
 
 	@Override
@@ -73,6 +80,9 @@ public class Ghost extends Entity {
 		}
 		super.x = (int)x;
 		super.y = (int)y;
+		if(health <= 0){
+			GameScene.entities.remove(this);
+		}
 	}
 
 	@Override

@@ -7,5 +7,7 @@ public class Reference {
 	public static float aspectRatio = 1f/(16f/9f);
 	public static float fixedTime = (1f/60f);
 	public static int tileSize = 3*16;
+	public static int width = 900;
+	public static int height = (int) (width * Reference.aspectRatio);
 
 }

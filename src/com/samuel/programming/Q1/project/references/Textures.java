@@ -38,5 +38,19 @@ public class Textures {
 	public static class Enemies{
 		public static Sprite ghost = new Sprite(0,0,3,16,16,Textures.SpriteSheets.enemies);
 	}
+	
+	public static class Panels{
+		public static class Turret{
+			public static Sprite bg = new Sprite(200, Reference.height);
+			private static int bgcolor = 0xff0000ff;
+			
+			static{
+				for(int i = 0; i < bg.pixels.length; i++){
+					bg.pixels[i] = bgcolor;
+				}
+			}
+			
+		}
+	}
 
 }

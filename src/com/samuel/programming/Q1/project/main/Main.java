@@ -8,8 +8,8 @@ import com.samuel.programming.Q1.project.references.Reference;
 
 public class Main extends LightsOut {
 	
-	int width = 900;
-	int height = (int) (width * Reference.aspectRatio);
+	int width = Reference.width;
+	int height = Reference.height;
 	public static Timer timer = new Timer();
 	GameScene game = new GameScene(width, height, "Level1");
 	
