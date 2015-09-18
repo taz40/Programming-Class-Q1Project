@@ -80,7 +80,7 @@ public class GameScene extends Scene {
 				waveTimer -= Reference.fixedTime;
 			}
 			if(waveCount >= waves){
-				waves = 0;
+				waveCount = 0;
 				levelTimer = timeBetweenLevels;
 			}
 		}else{
