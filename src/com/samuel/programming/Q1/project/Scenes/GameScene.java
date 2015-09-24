@@ -15,6 +15,7 @@ import com.samuel.programming.Q1.project.Level.Level;
 import com.samuel.programming.Q1.project.Panel.Panel;
 import com.samuel.programming.Q1.project.Panel.TurretPanel;
 import com.samuel.programming.Q1.project.main.Main;
+import com.samuel.programming.Q1.project.references.Enemies;
 import com.samuel.programming.Q1.project.references.Reference;
 
 public class GameScene extends Scene {
@@ -65,7 +66,7 @@ public class GameScene extends Scene {
 		if(levelTimer <= 0){
 			if(waveCount < waves && waveTimer <= 0){
 				if(spawnTimer <= 0 && enemyCount < eperwave){
-					entities.add(new Ghost(l.spawnX, l.spawnY, l, 20));
+					entities.add(new Ghost(l.spawnX, l.spawnY, l,Enemies.Ghost.health));
 					spawnTimer = timeBetweenSpawns;
 					enemyCount ++;
 				}else if(spawnTimer > 0){
@@ -114,6 +115,7 @@ public class GameScene extends Scene {
 			click = false;
 		}
 		turretPanel.update();
+		System.out.println(entities.size());
 	}
 
 }

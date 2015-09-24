@@ -5,6 +5,8 @@ import io.brace.lightsoutgaming.engine.graphics.Screen;
 
 import com.samuel.programming.Q1.project.Level.Level;
 import com.samuel.programming.Q1.project.Scenes.GameScene;
+import com.samuel.programming.Q1.project.references.Enemies;
+import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Textures;
 
 public class Ghost extends Entity {
@@ -13,7 +15,7 @@ public class Ghost extends Entity {
 	
 	Level l;
 	int tileX, tileY;
-	public float speed = 50;
+	public float speed = Enemies.Ghost.speed;
 	float x, y;
 	float nextX, nextY;
 	int health;
@@ -82,6 +84,7 @@ public class Ghost extends Entity {
 		super.y = (int)y;
 		if(health <= 0){
 			GameScene.entities.remove(this);
+			PlayerValues.Money += Enemies.Ghost.money;
 		}
 	}
 

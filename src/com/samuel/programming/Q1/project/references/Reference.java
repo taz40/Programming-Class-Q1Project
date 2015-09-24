@@ -9,5 +9,6 @@ public class Reference {
 	public static int tileSize = 3*16;
 	public static int width = 900;
 	public static int height = (int) (width * Reference.aspectRatio);
+	public static final int StartingCash = 100;
 
 }

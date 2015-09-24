@@ -4,6 +4,7 @@ import io.brace.lightsoutgaming.engine.LightsOut;
 
 import com.samuel.programming.Q1.project.Scenes.GameScene;
 import com.samuel.programming.Q1.project.Utils.Timer;
+import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
 
 public class Main extends LightsOut {
@@ -20,6 +21,7 @@ public class Main extends LightsOut {
 	protected void init() {
 		createDisplay(Reference.projectName + " v. " + Reference.version, width, height);
 		start();
+		PlayerValues.Money = Reference.StartingCash;
 	}
 
 	protected void render() {
