@@ -13,7 +13,8 @@ public class Textures {
 	public static class SpriteSheets{
 		public static SpriteSheet turret = new SpriteSheet("/Textures/Turret.png");
 		public static SpriteSheet terrain = new SpriteSheet("/Textures/Terrain.png");
-		public static SpriteSheet enemies = new SpriteSheet("/Textures/enemies.png");
+		public static SpriteSheet enemies = new SpriteSheet("/Textures/Enemies.png");
+		public static SpriteSheet UI = new SpriteSheet("/Textures/UI.png");
 	}
 	
 	public static class Entities{
@@ -51,6 +52,13 @@ public class Textures {
 			}
 			
 		}
+	}
+	
+	public static class UI{
+		public static Sprite startWave = new Sprite(0,0,3,32,16,Textures.SpriteSheets.UI);
+		public static Sprite ff = new Sprite(1,0,3,32,16,Textures.SpriteSheets.UI);
+		public static Sprite retry = new Sprite(2,0,3,32,16,Textures.SpriteSheets.UI);
+		public static Sprite quit = new Sprite(3,0,3,32,16,Textures.SpriteSheets.UI);
 	}
 
 }

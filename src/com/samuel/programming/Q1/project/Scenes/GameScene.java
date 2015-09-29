@@ -16,7 +16,9 @@ import com.samuel.programming.Q1.project.Panel.Panel;
 import com.samuel.programming.Q1.project.Panel.TurretPanel;
 import com.samuel.programming.Q1.project.main.Main;
 import com.samuel.programming.Q1.project.references.Enemies;
+import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
+import com.samuel.programming.Q1.project.references.Textures;
 
 public class GameScene extends Scene {
 	
@@ -26,22 +28,27 @@ public class GameScene extends Scene {
 	Turret selected;
 	Panel turretPanel = new TurretPanel();
 	boolean click = false;
+	int levelCount = 0;
 	int waveCount = 0;
 	int enemyCount = 0;
 	int waves = 3;
 	int eperwave = 5;
+	boolean inWave = false;
+	boolean ff = false;
+	float timeBetweenWaves = 2;
 	float waveTimer = 0;
-	float timeBetweenWaves = 5;
-	float timeBetweenLevels = 10;
-	float levelTimer = 0;
 	float timeBetweenSpawns = .5f;
 	float spawnTimer = 0;
+	boolean clicked = false;
+	public static int enemiesLiving = 0;
 	
 	public GameScene(int width, int height, String levelName){
 		this.width = width;
 		this.height = height;
-		entities.add(new TurretBasic((width/2)-3*8, (height/2)-3*8));
 		l = new Level("/Levels/"+levelName);
+		PlayerValues.Money = Reference.StartingCash;
+		PlayerValues.lives = Reference.startingLives;
+		entities = new ArrayList<Entity>();
 
 	}
 
@@ -58,15 +65,48 @@ public class GameScene extends Scene {
 		}
 		turretPanel.render(s);
 		s.renderString(10, 10, Main.timer.fps + " fps, " + Main.timer.ups + " ups", Color.black, false);
+		if(!inWave){
+			s.renderSprite(width-190, height-100, Textures.UI.startWave, false);
+		}else{
+			s.renderSprite(width-190, height-100, Textures.UI.ff, false);
+		}
+		
 	}
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		if(levelTimer <= 0){
+		if(Mouse.button == 1 && !clicked){
+			clicked = true;
+			if(!inWave){
+				int mx = Mouse.clickX;
+				int my = Mouse.clickY;
+				if(mx >= width-190 && mx <= width-190+(Reference.tileSize*2) && my >= height-100 && my <= height-100+(Reference.tileSize)){
+					inWave = true;
+					levelCount++;
+				}
+			}else{
+				int mx = Mouse.clickX;
+				int my = Mouse.clickY;
+				if(mx >= width-190 && mx <= width-190+(Reference.tileSize*2) && my >= height-100 && my <= height-100+(Reference.tileSize)){
+					if(ff){
+						Reference.fixedTime = Reference.fixedTimeConstant;
+						ff = false;
+					}else{
+						Reference.fixedTime = Reference.fastTime;
+						ff = true;
+					}
+				}
+			}
+		}else if(Mouse.button == 0 && clicked){
+			clicked = false;
+		}
+		if(inWave){
 			if(waveCount < waves && waveTimer <= 0){
 				if(spawnTimer <= 0 && enemyCount < eperwave){
-					entities.add(new Ghost(l.spawnX, l.spawnY, l,Enemies.Ghost.health));
+					Ghost lastEnemy = new Ghost(l.spawnX, l.spawnY, l,Enemies.Ghost.health + ((levelCount-1)*Enemies.Ghost.healthMod) + new Random().nextInt(21)-10);
+					entities.add(lastEnemy);
+					enemiesLiving++;
 					spawnTimer = timeBetweenSpawns;
 					enemyCount ++;
 				}else if(spawnTimer > 0){
@@ -81,17 +121,11 @@ public class GameScene extends Scene {
 				waveTimer -= Reference.fixedTime;
 			}
 			if(waveCount >= waves){
-				waveCount = 0;
-				levelTimer = timeBetweenLevels;
-			}
-		}else{
-			levelTimer -= Reference.fixedTime;
-			if(levelTimer <= 0){
-				if(eperwave == 15){
-					eperwave = 5;
-					waves++;
-				}else{
-					eperwave += 5;
+				if(enemiesLiving <= 0){
+					waveCount = 0;
+					enemiesLiving = 0;
+					Reference.fixedTime = Reference.fixedTimeConstant;
+					inWave = false;
 				}
 			}
 		}

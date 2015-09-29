@@ -45,10 +45,10 @@ public class Bullet extends Entity {
 		if(timer >= lifeTime){
 			GameScene.entities.remove(this);
 		}else{
-			timer += (1f/60f);
+			timer += Reference.fixedTime;
 		}
-		x += mx*(1f/60f);
-		y += my*(1f/60f);
+		x += mx*Reference.fixedTime;
+		y += my*Reference.fixedTime;
 	}
 
 	public void render(Screen s) {

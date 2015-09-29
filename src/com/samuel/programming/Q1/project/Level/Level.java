@@ -1,4 +1,4 @@
-package com.samuel.programming.Q1.project.Level;
+ package com.samuel.programming.Q1.project.Level;
 
 import io.brace.lightsoutgaming.engine.graphics.Screen;
 import io.brace.lightsoutgaming.engine.graphics.Sprite;
@@ -6,9 +6,8 @@ import io.brace.lightsoutgaming.engine.graphics.SpriteSheet;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
@@ -65,7 +64,7 @@ public class Level {
 					}
 				}
 			}
-			BufferedReader reader = new BufferedReader(new FileReader(SpriteSheet.class.getResource(path+".lvl").getPath()));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(SpriteSheet.class.getResource(path+".lvl").openStream()));
 			spawnX = Integer.parseInt(reader.readLine());
 			spawnY = Integer.parseInt(reader.readLine());
 			endX = Integer.parseInt(reader.readLine());

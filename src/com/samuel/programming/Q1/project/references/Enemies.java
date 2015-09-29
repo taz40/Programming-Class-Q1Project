@@ -6,6 +6,7 @@ public class Enemies {
 		public static float speed = 50;
 		public static int health = 20;
 		public static int money = 10;
+		public static int healthMod = 10;
 	}
 
 }

@@ -7,6 +7,7 @@ import com.samuel.programming.Q1.project.Level.Level;
 import com.samuel.programming.Q1.project.Scenes.GameScene;
 import com.samuel.programming.Q1.project.references.Enemies;
 import com.samuel.programming.Q1.project.references.PlayerValues;
+import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Textures;
 
 public class Ghost extends Entity {
@@ -18,7 +19,7 @@ public class Ghost extends Entity {
 	public float speed = Enemies.Ghost.speed;
 	float x, y;
 	float nextX, nextY;
-	int health;
+	public int health;
 	
 	boolean passable[][];
 	
@@ -69,22 +70,28 @@ public class Ghost extends Entity {
 		}
 		
 		if(x > nextX){
-			x -= speed*(1f/60f);
+			x -= speed*Reference.fixedTime;
 		}
 		if(x < nextX){
-			x += speed*(1f/60f);
+			x += speed*Reference.fixedTime;
 		}
 		if(y > nextY){
-			y -= speed*(1f/60f);
+			y -= speed*Reference.fixedTime;
 		}
 		if(y < nextY){
-			y += speed*(1f/60f);
+			y += speed*Reference.fixedTime;
 		}
 		super.x = (int)x;
 		super.y = (int)y;
 		if(health <= 0){
+			GameScene.enemiesLiving--;
 			GameScene.entities.remove(this);
 			PlayerValues.Money += Enemies.Ghost.money;
+		}
+		if(Math.abs((x/Reference.tileSize) - l.endX) <= .5 && Math.abs((y/Reference.tileSize) - l.endY) <= .5){
+			GameScene.enemiesLiving--;
+			GameScene.entities.remove(this);
+			PlayerValues.lives--;
 		}
 	}
 
