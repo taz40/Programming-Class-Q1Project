@@ -89,7 +89,7 @@ public class GameScene extends Scene {
 					entities.add(lastEnemy);
 					enemiesLiving++;
 					spawnTimer = timeBetweenSpawns;
-					//enemyCount ++;
+					enemyCount ++;
 				}else if(spawnTimer > 0){
 					spawnTimer -= Reference.fixedTime;
 				}
