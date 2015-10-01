@@ -3,6 +3,9 @@ package com.samuel.programming.Q1.project.main;
 import io.brace.lightsoutgaming.engine.LightsOut;
 import io.brace.lightsoutgaming.engine.input.Mouse;
 
+import com.samuel.programming.Q1.project.Entities.Button.Button;
+import com.samuel.programming.Q1.project.Entities.Button.Quit;
+import com.samuel.programming.Q1.project.Entities.Button.Retry;
 import com.samuel.programming.Q1.project.Scenes.GameScene;
 import com.samuel.programming.Q1.project.Utils.Timer;
 import com.samuel.programming.Q1.project.references.PlayerValues;
@@ -11,11 +14,13 @@ import com.samuel.programming.Q1.project.references.Textures;
 
 public class Main extends LightsOut {
 	
-	int width = Reference.width;
-	int height = Reference.height;
+	static int width = Reference.width;
+	static int height = Reference.height;
 	public static Timer timer = new Timer();
-	GameScene game = new GameScene(width, height, "Level1");
-	boolean lost = false, won = false;
+	public static GameScene game = new GameScene(width, height, "Level1");
+	public static boolean lost = false, won = false;
+	Button retry = new Retry((width)/2-Reference.tileSize, 300);
+	Button quit = new Quit((width)/2-Reference.tileSize, 400);
 	
 	public static void main(String[] args){
 		new Main().init();
@@ -31,8 +36,8 @@ public class Main extends LightsOut {
 		if(!lost && !won){
 			game.render(screen);
 		}else if(lost){
-			screen.renderSprite((width)/2-Reference.tileSize, 300, Textures.UI.retry, false);
-			screen.renderSprite((width)/2-Reference.tileSize, 400, Textures.UI.quit, false);
+			retry.render(screen);
+			quit.render(screen);
 		}
 		show();
 		timer.render();
@@ -45,23 +50,8 @@ public class Main extends LightsOut {
 				lose();
 			}
 		}else if(lost){
-			if(Mouse.button == 1){
-				Mouse.button = 0;
-				int mx = Mouse.clickX;
-				int my = Mouse.clickY;
-				if(mx >= (width)/2-Reference.tileSize && mx <= width-190+(Reference.tileSize*2)){
-					if(my >= 300 && my <= 300+(Reference.tileSize)){
-						//Retry
-						lost = false;
-						game = new GameScene(width, height, "Level1");
-					}
-					if(my >= 400 && my <= 400+(Reference.tileSize)){
-						//Quit
-						System.exit(0);
-						
-					}
-				}
-			}
+			retry.update();
+			quit.update();
 		}
 		timer.update();
 	}

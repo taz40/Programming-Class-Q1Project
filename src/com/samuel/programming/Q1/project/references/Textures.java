@@ -59,6 +59,11 @@ public class Textures {
 		public static Sprite ff = new Sprite(1,0,3,32,16,Textures.SpriteSheets.UI);
 		public static Sprite retry = new Sprite(2,0,3,32,16,Textures.SpriteSheets.UI);
 		public static Sprite quit = new Sprite(3,0,3,32,16,Textures.SpriteSheets.UI);
+		
+		public static Sprite startWaveH = new Sprite(0,1,3,32,16,Textures.SpriteSheets.UI);
+		public static Sprite ffH = new Sprite(1,1,3,32,16,Textures.SpriteSheets.UI);
+		public static Sprite retryH = new Sprite(2,1,3,32,16,Textures.SpriteSheets.UI);
+		public static Sprite quitH = new Sprite(3,1,3,32,16,Textures.SpriteSheets.UI);
 	}
 
 }

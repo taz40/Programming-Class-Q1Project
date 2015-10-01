@@ -10,7 +10,9 @@ import java.util.Random;
 
 import com.samuel.programming.Q1.project.Entities.Ghost;
 import com.samuel.programming.Q1.project.Entities.Turret;
-import com.samuel.programming.Q1.project.Entities.TurretBasic;
+import com.samuel.programming.Q1.project.Entities.Button.Button;
+import com.samuel.programming.Q1.project.Entities.Button.FastForward;
+import com.samuel.programming.Q1.project.Entities.Button.StartWave;
 import com.samuel.programming.Q1.project.Level.Level;
 import com.samuel.programming.Q1.project.Panel.Panel;
 import com.samuel.programming.Q1.project.Panel.TurretPanel;
@@ -18,11 +20,11 @@ import com.samuel.programming.Q1.project.main.Main;
 import com.samuel.programming.Q1.project.references.Enemies;
 import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
-import com.samuel.programming.Q1.project.references.Textures;
 
 public class GameScene extends Scene {
 	
-	int width, height;
+	static int width;
+	static int height;
 	public static ArrayList<Entity> entities = new ArrayList<Entity>();
 	public static Level l;
 	Turret selected;
@@ -33,14 +35,16 @@ public class GameScene extends Scene {
 	int enemyCount = 0;
 	int waves = 3;
 	int eperwave = 5;
-	boolean inWave = false;
-	boolean ff = false;
+	public static boolean inWave = false;
+	//boolean ff = false;
 	float timeBetweenWaves = 2;
 	float waveTimer = 0;
 	float timeBetweenSpawns = .5f;
 	float spawnTimer = 0;
 	boolean clicked = false;
 	public static int enemiesLiving = 0;
+	public static Button startWave;
+	public static Button fastForward;
 	
 	public GameScene(int width, int height, String levelName){
 		this.width = width;
@@ -49,7 +53,14 @@ public class GameScene extends Scene {
 		PlayerValues.Money = Reference.StartingCash;
 		PlayerValues.lives = Reference.startingLives;
 		entities = new ArrayList<Entity>();
-
+		startWave = new StartWave(width - 190, height -100);
+		fastForward = new FastForward(width - 190, height - 100);
+		fastForward.setActive(false);
+		entities.add(fastForward);
+		entities.add(startWave);
+		inWave = false;
+		enemiesLiving = 0;
+		
 	}
 
 	@Override
@@ -57,50 +68,20 @@ public class GameScene extends Scene {
 		// TODO Auto-generated method stub
 		l.render(s);
 		ArrayList<Entity> entityTmp = (ArrayList<Entity>)entities.clone();
-		for(Entity e : entityTmp){
-			e.render(s);
-		}
 		if(selected != null){
 			selected.selectedRender(s);
 		}
 		turretPanel.render(s);
-		s.renderString(10, 10, Main.timer.fps + " fps, " + Main.timer.ups + " ups", Color.black, false);
-		if(!inWave){
-			s.renderSprite(width-190, height-100, Textures.UI.startWave, false);
-		}else{
-			s.renderSprite(width-190, height-100, Textures.UI.ff, false);
+		for(Entity e : entityTmp){
+			e.render(s);
 		}
+		s.renderString(10, 10, Main.timer.fps + " fps, " + Main.timer.ups + " ups", Color.black, false);
 		
 	}
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		if(Mouse.button == 1 && !clicked){
-			clicked = true;
-			if(!inWave){
-				int mx = Mouse.clickX;
-				int my = Mouse.clickY;
-				if(mx >= width-190 && mx <= width-190+(Reference.tileSize*2) && my >= height-100 && my <= height-100+(Reference.tileSize)){
-					inWave = true;
-					levelCount++;
-				}
-			}else{
-				int mx = Mouse.clickX;
-				int my = Mouse.clickY;
-				if(mx >= width-190 && mx <= width-190+(Reference.tileSize*2) && my >= height-100 && my <= height-100+(Reference.tileSize)){
-					if(ff){
-						Reference.fixedTime = Reference.fixedTimeConstant;
-						ff = false;
-					}else{
-						Reference.fixedTime = Reference.fastTime;
-						ff = true;
-					}
-				}
-			}
-		}else if(Mouse.button == 0 && clicked){
-			clicked = false;
-		}
 		if(inWave){
 			if(waveCount < waves && waveTimer <= 0){
 				if(spawnTimer <= 0 && enemyCount < eperwave){
@@ -108,7 +89,7 @@ public class GameScene extends Scene {
 					entities.add(lastEnemy);
 					enemiesLiving++;
 					spawnTimer = timeBetweenSpawns;
-					enemyCount ++;
+					//enemyCount ++;
 				}else if(spawnTimer > 0){
 					spawnTimer -= Reference.fixedTime;
 				}
@@ -126,6 +107,8 @@ public class GameScene extends Scene {
 					enemiesLiving = 0;
 					Reference.fixedTime = Reference.fixedTimeConstant;
 					inWave = false;
+					fastForward.setActive(false);
+					startWave.setActive(true);
 				}
 			}
 		}
