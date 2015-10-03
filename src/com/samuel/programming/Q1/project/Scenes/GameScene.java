@@ -30,7 +30,7 @@ public class GameScene extends Scene {
 	public static ArrayList<Entity> entities = new ArrayList<Entity>();
 	public static Level l;
 	Turret selected;
-	Panel turretPanel = new TurretPanel();
+	TurretPanel turretPanel = new TurretPanel();
 	boolean click = false;
 	public static int levelCount = 0;
 	int waveCount = 0;
@@ -137,7 +137,7 @@ public class GameScene extends Scene {
 		if(selected != null){
 			selected.selectedUpdate();
 		}
-		if(Mouse.button == 1 && !click){
+		if(Mouse.button == 1 && !click && turretPanel.selected == null){
 			click = true;
 			selected = null;
 			for(Entity e : entities){

@@ -18,7 +18,7 @@ import com.samuel.programming.Q1.project.references.Turrets;
 public class TurretPanel extends Panel {
 	
 	TurretBasic displayTB = new TurretBasic(Reference.width-190, 50);
-	Turret selected = null;
+	public Turret selected = null;
 	boolean click = false;
 
 	@Override
@@ -31,9 +31,10 @@ public class TurretPanel extends Panel {
 			}else if(Mouse.clickX <= Reference.width-240 && selected != null){
 				int mx = ((Mouse.mouseX)/Reference.tileSize)*Reference.tileSize;
 				int my = (Mouse.mouseY/Reference.tileSize) * Reference.tileSize;
-				if(GameScene.l.sprites[mx/Reference.tileSize][my/Reference.tileSize] == Textures.Void && PlayerValues.Money >= Turrets.basic.cost){
+				if(GameScene.l.sprites[mx/Reference.tileSize][my/Reference.tileSize] == Textures.Void && PlayerValues.Money >= Turrets.basic.cost && (!Turrets.takenTiles[mx/Reference.tileSize][mx/Reference.tileSize])){
 					GameScene.entities.add((Entity) selected.clone());
 					PlayerValues.Money -= Turrets.basic.cost;
+					Turrets.takenTiles[mx/Reference.tileSize][mx/Reference.tileSize] = true;
 				}
 			}else{
 				selected = null;
