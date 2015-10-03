@@ -1,14 +1,17 @@
 package com.samuel.programming.Q1.project.Entities.Button;
 
+import com.samuel.programming.Q1.project.Scenes.GameScene;
+import com.samuel.programming.Q1.project.main.Main;
 import com.samuel.programming.Q1.project.references.PlayerValues;
+import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Textures;
 
 import io.brace.lightsoutgaming.engine.graphics.Screen;
 import io.brace.lightsoutgaming.engine.input.Mouse;
 
-public class BackToMainMenu extends Button {
+public class QuitToMain extends Button {
 
-	public BackToMainMenu(int x, int y) {
+	public QuitToMain(int x, int y) {
 		super(x, y, Textures.UI.back);
 		// TODO Auto-generated constructor stub
 	}
@@ -42,6 +45,8 @@ public class BackToMainMenu extends Button {
 		// TODO Auto-generated method stub
 		PlayerValues.Menu = 0;
 		Mouse.button = 0;
+		Main.game = new GameScene(Reference.width, Reference.height, "Level1");
+		Reference.fixedTime = Reference.fixedTimeConstant;
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import io.brace.lightsoutgaming.engine.graphics.Screen;
 
 import com.samuel.programming.Q1.project.Scenes.GameScene;
 import com.samuel.programming.Q1.project.main.Main;
+import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Textures;
 
@@ -42,7 +43,7 @@ public class Retry extends Button {
 	public void onMouseDown() {
 		// TODO Auto-generated method stub
 		Main.game = new GameScene(Reference.width, Reference.height, "Level1");
-		Main.lost = false;
+		PlayerValues.Menu = 1;
 	}
 
 	@Override

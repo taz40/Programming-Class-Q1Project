@@ -42,7 +42,7 @@ public class Textures {
 	
 	public static class Panels{
 		public static class Turret{
-			public static Sprite bg = new Sprite(200, Reference.height);
+			public static Sprite bg = new Sprite(240, Reference.height);
 			private static int bgcolor = 0xff0000ff;
 			
 			static{
@@ -62,7 +62,7 @@ public class Textures {
 		public static Sprite easy = new Sprite(0,2,3,32,16,Textures.SpriteSheets.UI);
 		public static Sprite hard = new Sprite(1,2,3,32,16,Textures.SpriteSheets.UI);
 		public static Sprite back = new Sprite(2,2,3,32,16,Textures.SpriteSheets.UI);
-
+		public static Sprite play = new Sprite(3,2,3,32,16,Textures.SpriteSheets.UI);
 		
 		public static Sprite startWaveH = new Sprite(0,1,3,32,16,Textures.SpriteSheets.UI);
 		public static Sprite ffH = new Sprite(1,1,3,32,16,Textures.SpriteSheets.UI);
@@ -71,7 +71,7 @@ public class Textures {
 		public static Sprite easyH = new Sprite(0,3,3,32,16,Textures.SpriteSheets.UI);
 		public static Sprite hardH = new Sprite(1,3,3,32,16,Textures.SpriteSheets.UI);
 		public static Sprite backH = new Sprite(2,3,3,32,16,Textures.SpriteSheets.UI);
-		
+		public static Sprite playH = new Sprite(3,3,3,32,16,Textures.SpriteSheets.UI);
 		
 	}
 

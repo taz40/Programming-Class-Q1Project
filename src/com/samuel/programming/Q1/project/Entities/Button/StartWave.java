@@ -8,9 +8,12 @@ import io.brace.lightsoutgaming.engine.graphics.Screen;
 import io.brace.lightsoutgaming.engine.graphics.Sprite;
 
 public class StartWave extends Button {
+	
+	int level = 0;
 
 	public StartWave(int x, int y) {
 		super(x, y, Textures.UI.startWave);
+		level = 0;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -41,10 +44,16 @@ public class StartWave extends Button {
 	@Override
 	public void onMouseDown() {
 		// TODO Auto-generated method stub
+		level ++;
+		GameScene.levelCount++;
 		GameScene.inWave = true;
 		GameScene.fastForward.mouseDown = true;
 		GameScene.startWave.setActive(false);
 		GameScene.fastForward.setActive(true);
+		GameScene.eperwave = 5 + ((level-1)/4);
+				//(5*level)-15*((level-1)/3);
+		GameScene.waves = 3+((level-1) % 4);
+				//((level-1)/3)+3;
 	}
 
 	@Override

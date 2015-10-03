@@ -2,9 +2,11 @@ package com.samuel.programming.Q1.project.Scenes;
 
 import io.brace.lightsoutgaming.engine.Entity;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
+import io.brace.lightsoutgaming.engine.input.Keyboard;
 import io.brace.lightsoutgaming.engine.input.Mouse;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -30,11 +32,11 @@ public class GameScene extends Scene {
 	Turret selected;
 	Panel turretPanel = new TurretPanel();
 	boolean click = false;
-	int levelCount = 0;
+	public static int levelCount = 0;
 	int waveCount = 0;
 	int enemyCount = 0;
-	int waves = 3;
-	int eperwave = 5;
+	public static int waves = 3;
+	public static int eperwave = 5;
 	public static boolean inWave = false;
 	//boolean ff = false;
 	float timeBetweenWaves = 2;
@@ -60,7 +62,7 @@ public class GameScene extends Scene {
 		entities.add(startWave);
 		inWave = false;
 		enemiesLiving = 0;
-		
+		levelCount = 0;
 	}
 
 	@Override
@@ -82,34 +84,50 @@ public class GameScene extends Scene {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		if(inWave){
-			if(waveCount < waves && waveTimer <= 0){
-				if(spawnTimer <= 0 && enemyCount < eperwave){
-					Ghost lastEnemy = new Ghost(l.spawnX, l.spawnY, l,Enemies.Ghost.health + ((levelCount-1)*Enemies.Ghost.healthMod) + new Random().nextInt(21)-10);
-					entities.add(lastEnemy);
-					enemiesLiving++;
-					spawnTimer = timeBetweenSpawns;
-					enemyCount ++;
-				}else if(spawnTimer > 0){
-					spawnTimer -= Reference.fixedTime;
+		if(Keyboard.getKey(KeyEvent.VK_ESCAPE)){
+			PlayerValues.Menu = 3;
+			Keyboard.keys[KeyEvent.VK_ESCAPE] = false;
+		}
+		if(PlayerValues.mode == 0){
+			if(inWave){
+				if(waveCount < waves && waveTimer <= 0){
+					if(spawnTimer <= 0 && enemyCount < eperwave){
+						Ghost lastEnemy = new Ghost(l.spawnX, l.spawnY, l,Enemies.Ghost.health + ((levelCount-1)*Enemies.Ghost.healthMod) + new Random().nextInt(21)-10);
+						entities.add(lastEnemy);
+						enemiesLiving++;
+						spawnTimer = timeBetweenSpawns;
+						enemyCount ++;
+					}else if(spawnTimer > 0){
+						spawnTimer -= Reference.fixedTime;
+					}
+					if(enemyCount >= eperwave){
+						waveCount ++;
+						enemyCount = 0;
+						waveTimer = timeBetweenWaves;
+					}
+				}else if(waveTimer > 0){
+					waveTimer -= Reference.fixedTime;
 				}
-				if(enemyCount >= eperwave){
-					waveCount ++;
-					enemyCount = 0;
-					waveTimer = timeBetweenWaves;
+				if(waveCount >= waves){
+					if(enemiesLiving <= 0){
+						waveCount = 0;
+						enemiesLiving = 0;
+						Reference.fixedTime = Reference.fixedTimeConstant;
+						inWave = false;
+						fastForward.setActive(false);
+						startWave.setActive(true);
+					}
 				}
-			}else if(waveTimer > 0){
-				waveTimer -= Reference.fixedTime;
 			}
-			if(waveCount >= waves){
-				if(enemiesLiving <= 0){
-					waveCount = 0;
-					enemiesLiving = 0;
-					Reference.fixedTime = Reference.fixedTimeConstant;
-					inWave = false;
-					fastForward.setActive(false);
-					startWave.setActive(true);
-				}
+		}else if(PlayerValues.mode == 1 && inWave){
+			if(spawnTimer <= 0){
+				Ghost lastEnemy = new Ghost(l.spawnX, l.spawnY, l,Enemies.Ghost.health + ((enemyCount/20)*Enemies.Ghost.healthMod) + new Random().nextInt(21)-10);
+				entities.add(lastEnemy);
+				enemiesLiving++;
+				spawnTimer = timeBetweenSpawns;
+				enemyCount ++;
+			}else if(spawnTimer > 0){
+				spawnTimer -= Reference.fixedTime;
 			}
 		}
 		ArrayList<Entity> entityTmp = (ArrayList<Entity>)entities.clone();

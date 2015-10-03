@@ -6,48 +6,47 @@ import com.samuel.programming.Q1.project.references.Textures;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
 import io.brace.lightsoutgaming.engine.input.Mouse;
 
-public class BackToMainMenu extends Button {
+public class Resume extends Button {
 
-	public BackToMainMenu(int x, int y) {
-		super(x, y, Textures.UI.back);
+	public Resume(int x, int y) {
+		super(x, y, Textures.UI.play);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void onUpdate() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onDraw(Screen s) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onMouseEnter() {
 		// TODO Auto-generated method stub
-		sprite = Textures.UI.backH;
+		sprite = Textures.UI.playH;
 	}
 
 	@Override
 	public void onMouseExit() {
 		// TODO Auto-generated method stub
-		sprite = Textures.UI.back;
+		sprite = Textures.UI.play;
 	}
 
 	@Override
 	public void onMouseDown() {
 		// TODO Auto-generated method stub
-		PlayerValues.Menu = 0;
-		Mouse.button = 0;
+		PlayerValues.Menu = 1;
 	}
 
 	@Override
 	public void onMouseUp() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

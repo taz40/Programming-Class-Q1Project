@@ -9,9 +9,9 @@ public class Reference {
 	public static float fixedTime = fixedTimeConstant;
 	public static float fastTime = fixedTimeConstant*3;
 	public static int tileSize = 3*16;
-	public static int width = 900;
+	public static int width = 912;
 	public static int height = (int) (width * Reference.aspectRatio);
-	public static final int StartingCash = 300;
+	public static final int StartingCash = 150;
 	public static final int startingLives = 100;
 
 }
