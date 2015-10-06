@@ -31,10 +31,10 @@ public class TurretPanel extends Panel {
 			}else if(Mouse.clickX <= Reference.width-240 && selected != null){
 				int mx = ((Mouse.mouseX)/Reference.tileSize)*Reference.tileSize;
 				int my = (Mouse.mouseY/Reference.tileSize) * Reference.tileSize;
-				if(GameScene.l.sprites[mx/Reference.tileSize][my/Reference.tileSize] == Textures.Void && PlayerValues.Money >= Turrets.basic.cost && (!Turrets.takenTiles[mx/Reference.tileSize][mx/Reference.tileSize])){
+				if(GameScene.l.sprites[mx/Reference.tileSize][my/Reference.tileSize] == Textures.Void && PlayerValues.Money >= Turrets.basic.cost && (!Turrets.takenTiles[mx/Reference.tileSize][my/Reference.tileSize])){
 					GameScene.entities.add((Entity) selected.clone());
 					PlayerValues.Money -= Turrets.basic.cost;
-					Turrets.takenTiles[mx/Reference.tileSize][mx/Reference.tileSize] = true;
+					Turrets.takenTiles[mx/Reference.tileSize][my/Reference.tileSize] = true;
 				}
 			}else{
 				selected = null;
@@ -54,9 +54,9 @@ public class TurretPanel extends Panel {
 	public void render(Screen s) {
 		// TODO Auto-generated method stub
 		s.renderSprite(Reference.width-240, 0, Textures.Panels.Turret.bg, false);
-		s.renderString(Reference.width-125, 30, "Money: $"+PlayerValues.Money, Color.WHITE, new Font("comic sans ms", Font.PLAIN, 20), false);
-		s.renderString(Reference.width-125, 0, "Lives: "+PlayerValues.lives, Color.WHITE, new Font("comic sans ms", Font.PLAIN, 20), false);
-		s.renderString(Reference.width-190, 100, "$"+Turrets.basic.cost, Color.WHITE, new Font("comic sans ms", Font.PLAIN, 20), false);
+		s.renderString(Reference.width-125, 30, "Money: $"+PlayerValues.Money, Color.WHITE, Reference.Fonts.ComicSans, false);
+		s.renderString(Reference.width-125, 0, "Lives: "+PlayerValues.lives, Color.WHITE, Reference.Fonts.ComicSans, false);
+		s.renderString(Reference.width-190, 100, "$"+Turrets.basic.cost, Color.WHITE, Reference.Fonts.ComicSans, false);
 		displayTB.render(s);
 		if(selected != null){
 			selected.render(s);

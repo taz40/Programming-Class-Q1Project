@@ -1,5 +1,7 @@
 package com.samuel.programming.Q1.project.references;
 
+import java.awt.Font;
+
 public class Reference {
 	
 	public static String projectName = "Q1 Project";
@@ -13,5 +15,9 @@ public class Reference {
 	public static int height = (int) (width * Reference.aspectRatio);
 	public static final int StartingCash = 150;
 	public static final int startingLives = 100;
+	public static final float sellPercent = .65f;
+	public static class Fonts{
+		public static final Font ComicSans = new Font("comic sans ms", Font.PLAIN, 20);
+	}
 
 }

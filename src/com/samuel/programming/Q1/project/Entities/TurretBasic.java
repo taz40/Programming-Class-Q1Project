@@ -8,6 +8,7 @@ import com.samuel.programming.Q1.project.Entities.Projectiles.Bullet;
 import com.samuel.programming.Q1.project.Scenes.GameScene;
 import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Textures;
+import com.samuel.programming.Q1.project.references.Turrets;
 
 public class TurretBasic extends Turret {
 
@@ -15,10 +16,10 @@ public class TurretBasic extends Turret {
 	double angle = 0;
 	float coolDown = 1;
 	float timer = 0;
-	int dmg = 10;
 	
 	public TurretBasic(int x, int y){
-		super(x, y, 3*3*16);
+		super(x, y, Turrets.basic.range*Reference.tileSize, Turrets.basic.dmg);
+		cost += Turrets.basic.cost;
 	}
 
 	public void update() {
@@ -61,7 +62,7 @@ public class TurretBasic extends Turret {
 
 	@Override
 	public void selectedUpdate() {
-		System.out.println("Selected!");
+		
 	}
 
 	@Override

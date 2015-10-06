@@ -20,13 +20,13 @@ public class Bullet extends Entity {
 	float lifeTime = 10;
 	int dmg;
 	
-	public Bullet(int x, int y, float mx, float my, float angle, int dmg){
+	public Bullet(int x, int y, float mx, float my, float angle, float dmg){
 		this.x = x;
 		this.y = y;
 		this.mx = mx;
 		this.my = my;
 		this.angle = angle;
-		this.dmg = dmg;
+		this.dmg = (int)dmg;
 	}
 
 	public void update() {

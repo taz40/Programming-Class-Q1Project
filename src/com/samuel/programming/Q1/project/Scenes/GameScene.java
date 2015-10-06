@@ -29,7 +29,7 @@ public class GameScene extends Scene {
 	static int height;
 	public static ArrayList<Entity> entities = new ArrayList<Entity>();
 	public static Level l;
-	Turret selected;
+	public static Turret selected;
 	TurretPanel turretPanel = new TurretPanel();
 	boolean click = false;
 	public static int levelCount = 0;
@@ -139,7 +139,7 @@ public class GameScene extends Scene {
 			selected.selectedUpdate();
 			info.update();
 		}
-		if(Mouse.button == 1 && !click && turretPanel.selected == null){
+		if(Mouse.button == 1 && !click && turretPanel.selected == null && (selected == null || Mouse.mouseY <= Reference.height - 96)){
 			click = true;
 			selected = null;
 			for(Entity e : entities){

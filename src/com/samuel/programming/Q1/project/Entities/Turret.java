@@ -11,12 +11,13 @@ import com.samuel.programming.Q1.project.references.Textures;
 
 public abstract class Turret extends Entity {
 	
-	int range;
+	public float range, dmg, cost;
 	
-	public Turret(int x, int y, int range){
+	public Turret(int x, int y, float range, float dmg){
 		this.x = x;
 		this.y = y;
 		this.range = range;
+		this.dmg = dmg;
 	}
 	
 	public double distance(Entity e){
