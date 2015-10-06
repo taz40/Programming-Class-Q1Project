@@ -52,6 +52,17 @@ public class Textures {
 			}
 			
 		}
+		public static class Info{
+			public static Sprite bg = new Sprite(Reference.width-240, 96);
+			private static int bgcolor = 0xff0000ff;
+			
+			static{
+				for(int i = 0; i < bg.pixels.length; i++){
+					bg.pixels[i] = bgcolor;
+				}
+			}
+			
+		}
 	}
 	
 	public static class UI{

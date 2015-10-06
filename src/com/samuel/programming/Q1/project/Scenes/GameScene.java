@@ -1,10 +1,5 @@
 package com.samuel.programming.Q1.project.Scenes;
 
-import io.brace.lightsoutgaming.engine.Entity;
-import io.brace.lightsoutgaming.engine.graphics.Screen;
-import io.brace.lightsoutgaming.engine.input.Keyboard;
-import io.brace.lightsoutgaming.engine.input.Mouse;
-
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -16,12 +11,17 @@ import com.samuel.programming.Q1.project.Entities.Button.Button;
 import com.samuel.programming.Q1.project.Entities.Button.FastForward;
 import com.samuel.programming.Q1.project.Entities.Button.StartWave;
 import com.samuel.programming.Q1.project.Level.Level;
-import com.samuel.programming.Q1.project.Panel.Panel;
+import com.samuel.programming.Q1.project.Panel.TurretInfoPanel;
 import com.samuel.programming.Q1.project.Panel.TurretPanel;
 import com.samuel.programming.Q1.project.main.Main;
 import com.samuel.programming.Q1.project.references.Enemies;
 import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
+
+import io.brace.lightsoutgaming.engine.Entity;
+import io.brace.lightsoutgaming.engine.graphics.Screen;
+import io.brace.lightsoutgaming.engine.input.Keyboard;
+import io.brace.lightsoutgaming.engine.input.Mouse;
 
 public class GameScene extends Scene {
 	
@@ -47,6 +47,7 @@ public class GameScene extends Scene {
 	public static int enemiesLiving = 0;
 	public static Button startWave;
 	public static Button fastForward;
+	TurretInfoPanel info = new TurretInfoPanel();
 	
 	public GameScene(int width, int height, String levelName){
 		this.width = width;
@@ -70,15 +71,15 @@ public class GameScene extends Scene {
 		// TODO Auto-generated method stub
 		l.render(s);
 		ArrayList<Entity> entityTmp = (ArrayList<Entity>)entities.clone();
-		if(selected != null){
-			selected.selectedRender(s);
-		}
 		turretPanel.render(s);
 		for(Entity e : entityTmp){
 			e.render(s);
 		}
 		s.renderString(10, 10, Main.timer.fps + " fps, " + Main.timer.ups + " ups", Color.black, false);
-		
+		if(selected != null){
+			selected.selectedRender(s);
+			info.render(s);
+		}
 	}
 
 	@Override
@@ -136,6 +137,7 @@ public class GameScene extends Scene {
 		}
 		if(selected != null){
 			selected.selectedUpdate();
+			info.update();
 		}
 		if(Mouse.button == 1 && !click && turretPanel.selected == null){
 			click = true;
