@@ -26,6 +26,10 @@ public class TurretInfoPanel extends Panel {
 	public void update() {
 		// TODO Auto-generated method stub
 		sell.update();
+		first.update();
+		last.update();
+		close.update();
+		strong.update();
 	}
 
 	@Override

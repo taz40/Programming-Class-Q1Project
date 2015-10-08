@@ -12,6 +12,7 @@ import com.samuel.programming.Q1.project.references.Textures;
 public abstract class Turret extends Entity {
 	
 	public float range, dmg, cost;
+	public int targetMode = 0;
 	
 	public Turret(int x, int y, float range, float dmg){
 		this.x = x;

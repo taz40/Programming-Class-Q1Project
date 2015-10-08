@@ -13,7 +13,7 @@ public class Reference {
 	public static int tileSize = 3*16;
 	public static int width = 912;
 	public static int height = (int) (width * Reference.aspectRatio);
-	public static final int StartingCash = 150000;
+	public static final int StartingCash = 150;
 	public static final int startingLives = 100;
 	public static final float sellPercent = .65f;
 	public static class Fonts{

@@ -25,10 +25,33 @@ public class TurretBasic extends Turret {
 	public void update() {
 		// TODO Auto-generated method stub
 		Ghost target = null;
-		for(Entity e : GameScene.entities){
-			if(e instanceof Ghost){
-				if((target == null || ((Ghost)e).tilesTraveled > target.tilesTraveled) && distance(e) <= range)
-					target = (Ghost)e;
+		if(this.targetMode == 0){
+			for(Entity e : GameScene.entities){
+				if(e instanceof Ghost){
+					if((target == null || ((Ghost)e).tilesTraveled > target.tilesTraveled) && distance(e) <= range)
+						target = (Ghost)e;
+				}
+			}
+		}else if(targetMode == 1){
+			for(Entity e : GameScene.entities){
+				if(e instanceof Ghost){
+					if((target == null || ((Ghost)e).tilesTraveled < target.tilesTraveled) && distance(e) <= range)
+						target = (Ghost)e;
+				}
+			}
+		}else if(targetMode == 2){
+			for(Entity e : GameScene.entities){
+				if(e instanceof Ghost){
+					if((target == null || distance(e) < distance(target)) && distance(e) <= range)
+						target = (Ghost)e;
+				}
+			}
+		}else if(targetMode == 3){
+			for(Entity e : GameScene.entities){
+				if(e instanceof Ghost){
+					if((target == null || ((Ghost)e).health > target.health) && distance(e) <= range)
+						target = (Ghost)e;
+				}
 			}
 		}
 		if(target != null){
