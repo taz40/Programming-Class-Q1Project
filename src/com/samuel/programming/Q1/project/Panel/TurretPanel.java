@@ -35,6 +35,8 @@ public class TurretPanel extends Panel {
 					GameScene.entities.add((Entity) selected.clone());
 					PlayerValues.Money -= Turrets.basic.cost;
 					Turrets.takenTiles[mx/Reference.tileSize][my/Reference.tileSize] = true;
+				}else if(Turrets.takenTiles[mx/Reference.tileSize][my/Reference.tileSize]){
+					System.out.println("Taken!");
 				}
 			}else{
 				selected = null;

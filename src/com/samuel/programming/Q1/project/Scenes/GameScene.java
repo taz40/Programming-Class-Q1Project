@@ -17,6 +17,7 @@ import com.samuel.programming.Q1.project.main.Main;
 import com.samuel.programming.Q1.project.references.Enemies;
 import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
+import com.samuel.programming.Q1.project.references.Turrets;
 
 import io.brace.lightsoutgaming.engine.Entity;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
@@ -64,6 +65,7 @@ public class GameScene extends Scene {
 		inWave = false;
 		enemiesLiving = 0;
 		levelCount = 0;
+		Turrets.takenTiles = new boolean[100][100];
 	}
 
 	@Override
@@ -152,7 +154,6 @@ public class GameScene extends Scene {
 			click = false;
 		}
 		turretPanel.update();
-		System.out.println(entities.size());
 	}
 
 }
