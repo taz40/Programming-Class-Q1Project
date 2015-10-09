@@ -20,6 +20,7 @@ public class TurretBasic extends Turret {
 	public TurretBasic(int x, int y){
 		super(x, y, Turrets.basic.range*Reference.tileSize, Turrets.basic.dmg);
 		cost += Turrets.basic.cost;
+		upgradeCost = Turrets.basic.startingUpgradeCost;
 	}
 
 	public void update() {
@@ -92,5 +93,13 @@ public class TurretBasic extends Turret {
 	public Object clone() {
 		// TODO Auto-generated method stub
 		return new TurretBasic(x, y);
+	}
+
+	@Override
+	public void upgrade() {
+		// TODO Auto-generated method stub
+		dmg += Turrets.basic.upgradeDmgMod;
+		range += Turrets.basic.upgradeRangeMod*Reference.tileSize;
+		upgradeCost += (int)(Turrets.basic.upgradeCostMod*upgradeCost);
 	}
 }

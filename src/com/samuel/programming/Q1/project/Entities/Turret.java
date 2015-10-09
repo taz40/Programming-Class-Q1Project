@@ -11,7 +11,8 @@ import com.samuel.programming.Q1.project.references.Textures;
 
 public abstract class Turret extends Entity {
 	
-	public float range, dmg, cost;
+	public float range, dmg, cost, upgradeCost;
+	public int level = 1;
 	public int targetMode = 0;
 	
 	public Turret(int x, int y, float range, float dmg){
@@ -36,5 +37,7 @@ public abstract class Turret extends Entity {
 	public abstract void selectedUpdate();
 	
 	public abstract Object clone();
+	
+	public abstract void upgrade();
 
 }

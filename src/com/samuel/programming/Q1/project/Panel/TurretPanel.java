@@ -17,7 +17,7 @@ import com.samuel.programming.Q1.project.references.Turrets;
 
 public class TurretPanel extends Panel {
 	
-	TurretBasic displayTB = new TurretBasic(Reference.width-190, 50);
+	TurretBasic displayTB = new TurretBasic(Reference.width-190, 70);
 	public Turret selected = null;
 	boolean click = false;
 
@@ -56,9 +56,9 @@ public class TurretPanel extends Panel {
 	public void render(Screen s) {
 		// TODO Auto-generated method stub
 		s.renderSprite(Reference.width-240, 0, Textures.Panels.Turret.bg, false);
-		s.renderString(Reference.width-125, 30, "Money: $"+PlayerValues.Money, Color.WHITE, Reference.Fonts.ComicSans, false);
-		s.renderString(Reference.width-125, 0, "Lives: "+PlayerValues.lives, Color.WHITE, Reference.Fonts.ComicSans, false);
-		s.renderString(Reference.width-190, 100, "$"+Turrets.basic.cost, Color.WHITE, Reference.Fonts.ComicSans, false);
+		s.renderString(Reference.width-230, 30, "Money: $"+PlayerValues.Money, Color.WHITE, Reference.Fonts.ComicSans, false);
+		s.renderString(Reference.width-230, 0, "Lives: "+PlayerValues.lives, Color.WHITE, Reference.Fonts.ComicSans, false);
+		s.renderString(Reference.width-190, 120, "$"+Turrets.basic.cost, Color.WHITE, Reference.Fonts.ComicSans, false);
 		displayTB.render(s);
 		if(selected != null){
 			selected.render(s);

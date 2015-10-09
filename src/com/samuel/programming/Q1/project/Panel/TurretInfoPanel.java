@@ -10,6 +10,7 @@ import com.samuel.programming.Q1.project.Entities.Button.TargetClose;
 import com.samuel.programming.Q1.project.Entities.Button.TargetFirst;
 import com.samuel.programming.Q1.project.Entities.Button.TargetLast;
 import com.samuel.programming.Q1.project.Entities.Button.TargetStrong;
+import com.samuel.programming.Q1.project.Entities.Button.Upgrade;
 import com.samuel.programming.Q1.project.Scenes.GameScene;
 import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Textures;
@@ -21,6 +22,7 @@ public class TurretInfoPanel extends Panel {
 	Button last = new TargetLast(257, Reference.height-86);
 	Button close = new TargetClose(295, Reference.height-86);
 	Button strong = new TargetStrong(333, Reference.height-86);
+	Button upgrade = new Upgrade(225, Reference.height -60);
 
 	@Override
 	public void update() {
@@ -30,6 +32,7 @@ public class TurretInfoPanel extends Panel {
 		last.update();
 		close.update();
 		strong.update();
+		upgrade.update();
 	}
 
 	@Override
@@ -43,6 +46,8 @@ public class TurretInfoPanel extends Panel {
 		last.render(s);
 		close.render(s);
 		strong.render(s);
+		upgrade.render(s);
+		s.renderString(225, Reference.height - 35, "$"+GameScene.selected.upgradeCost, Color.white,  Reference.Fonts.ComicSans, false);
 		s.renderString(120, Reference.height-40, "$"+(int)(GameScene.selected.cost*Reference.sellPercent), Color.white, Reference.Fonts.ComicSans, false);
 	}
 
