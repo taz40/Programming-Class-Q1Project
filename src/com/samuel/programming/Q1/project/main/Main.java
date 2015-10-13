@@ -1,5 +1,6 @@
 package com.samuel.programming.Q1.project.main;
 
+import com.samuel.programming.Q1.project.Scenes.DifficultyMenu;
 import com.samuel.programming.Q1.project.Scenes.GameScene;
 import com.samuel.programming.Q1.project.Scenes.LostMenu;
 import com.samuel.programming.Q1.project.Scenes.MainMenu;
@@ -19,6 +20,7 @@ public class Main extends LightsOut {
 	LostMenu lostMenu = new LostMenu();
 	MainMenu mainMenu = new MainMenu();
 	PauseMenu pauseMenu = new PauseMenu();
+	DifficultyMenu difficultyMenu = new DifficultyMenu();
 	
 	public static void main(String[] args){
 		new Main().init();
@@ -40,6 +42,8 @@ public class Main extends LightsOut {
 		}else if(PlayerValues.Menu == 3){
 			game.render(screen);
 			pauseMenu.render(screen);
+		}else if(PlayerValues.Menu == 4){
+			difficultyMenu.render(screen);
 		}
 		show();
 		timer.render();
@@ -58,6 +62,8 @@ public class Main extends LightsOut {
 			mainMenu.update();
 		}else if(PlayerValues.Menu == 3){
 			pauseMenu.update();
+		}else if(PlayerValues.Menu == 4){
+			difficultyMenu.update();
 		}
 		timer.update();
 	}

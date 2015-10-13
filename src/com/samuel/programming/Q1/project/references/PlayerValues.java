@@ -5,4 +5,5 @@ public class PlayerValues {
 	public static int lives;
 	public static int Menu = 0;
 	public static int mode = 0;
+	public static int players = 1;
 }

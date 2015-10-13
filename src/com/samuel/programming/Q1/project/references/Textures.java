@@ -80,6 +80,8 @@ public class Textures {
 		public static Sprite close = new Sprite(3,4,1,32,16,Textures.SpriteSheets.UI);
 		public static Sprite strong = new Sprite(0,6,1,32,16,Textures.SpriteSheets.UI);
 		public static Sprite upgrade = new Sprite(1,6,2,32,16,Textures.SpriteSheets.UI);
+		public static Sprite single = new Sprite(2, 6, 3, 32, 16, Textures.SpriteSheets.UI);
+		public static Sprite multi = new Sprite(3, 6, 3, 32, 16, Textures.SpriteSheets.UI);
 		
 		public static Sprite startWaveH = new Sprite(0,1,3,32,16,Textures.SpriteSheets.UI);
 		public static Sprite ffH = new Sprite(1,1,3,32,16,Textures.SpriteSheets.UI);
@@ -95,6 +97,8 @@ public class Textures {
 		public static Sprite closeH = new Sprite(3,5,1,32,16,Textures.SpriteSheets.UI);
 		public static Sprite strongH = new Sprite(0,7,1,32,16,Textures.SpriteSheets.UI);
 		public static Sprite upgradeH = new Sprite(1,7,2,32,16,Textures.SpriteSheets.UI);
+		public static Sprite singleH = new Sprite(2, 7, 3, 32, 16, Textures.SpriteSheets.UI);
+		public static Sprite multiH = new Sprite(3, 7, 3, 32, 16, Textures.SpriteSheets.UI);
 	}
 
 }
