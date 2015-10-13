@@ -3,6 +3,7 @@ package com.samuel.programming.Q1.project.Entities;
 import io.brace.lightsoutgaming.engine.Entity;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
 import io.brace.lightsoutgaming.engine.graphics.Sprite;
+import io.brace.lightsoutgaming.engine.input.Mouse;
 
 import com.samuel.programming.Q1.project.Entities.Projectiles.Bullet;
 import com.samuel.programming.Q1.project.Scenes.GameScene;
@@ -21,6 +22,10 @@ public class TurretBasic extends Turret {
 		super(x, y, Turrets.basic.range*Reference.tileSize, Turrets.basic.dmg);
 		cost += Turrets.basic.cost;
 		upgradeCost = Turrets.basic.startingUpgradeCost;
+	}
+	
+	public TurretBasic(){
+		super(((Mouse.mouseX)/Reference.tileSize)*Reference.tileSize, (Mouse.mouseY/Reference.tileSize) * Reference.tileSize, Turrets.basic.range*Reference.tileSize, Turrets.basic.dmg);
 	}
 
 	public void update() {
@@ -101,5 +106,18 @@ public class TurretBasic extends Turret {
 		dmg += Turrets.basic.upgradeDmgMod;
 		range += Turrets.basic.upgradeRangeMod*Reference.tileSize;
 		upgradeCost += (int)(Turrets.basic.upgradeCostMod*upgradeCost);
+	}
+
+	@Override
+	public String[] send() {
+		// TODO Auto-generated method stub
+		return new String[]{x+"", y+""};
+	}
+
+	@Override
+	public void recv(String[] data) {
+		// TODO Auto-generated method stub
+		x = Integer.parseInt(data[0]);
+		y = Integer.parseInt(data[1]);
 	}
 }

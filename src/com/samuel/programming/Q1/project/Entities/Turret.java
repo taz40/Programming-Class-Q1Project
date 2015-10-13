@@ -1,15 +1,10 @@
 package com.samuel.programming.Q1.project.Entities;
 
 import io.brace.lightsoutgaming.engine.Entity;
+import io.brace.lightsoutgaming.engine.Network.Networked;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
-import io.brace.lightsoutgaming.engine.graphics.Sprite;
-import io.brace.lightsoutgaming.engine.input.Mouse;
 
-import com.samuel.programming.Q1.project.Entities.Projectiles.Bullet;
-import com.samuel.programming.Q1.project.Scenes.GameScene;
-import com.samuel.programming.Q1.project.references.Textures;
-
-public abstract class Turret extends Entity {
+public abstract class Turret extends Networked {
 	
 	public float range, dmg, cost, upgradeCost;
 	public int level = 1;

@@ -1,5 +1,12 @@
 package com.samuel.programming.Q1.project.Scenes;
 
+import io.brace.lightsoutgaming.engine.Entity;
+import io.brace.lightsoutgaming.engine.Network.NetworkUtils;
+import io.brace.lightsoutgaming.engine.Network.Networked;
+import io.brace.lightsoutgaming.engine.graphics.Screen;
+import io.brace.lightsoutgaming.engine.input.Keyboard;
+import io.brace.lightsoutgaming.engine.input.Mouse;
+
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -18,11 +25,6 @@ import com.samuel.programming.Q1.project.references.Enemies;
 import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Turrets;
-
-import io.brace.lightsoutgaming.engine.Entity;
-import io.brace.lightsoutgaming.engine.graphics.Screen;
-import io.brace.lightsoutgaming.engine.input.Keyboard;
-import io.brace.lightsoutgaming.engine.input.Mouse;
 
 public class GameScene extends Scene {
 	
@@ -53,34 +55,56 @@ public class GameScene extends Scene {
 	public GameScene(int width, int height, String levelName){
 		this.width = width;
 		this.height = height;
-		l = new Level("/Levels/"+levelName);
-		PlayerValues.Money = Reference.StartingCash;
-		PlayerValues.lives = Reference.startingLives;
-		entities = new ArrayList<Entity>();
-		startWave = new StartWave(width - 190, height -100);
-		fastForward = new FastForward(width - 190, height - 100);
-		fastForward.setActive(false);
-		entities.add(fastForward);
-		entities.add(startWave);
-		inWave = false;
-		enemiesLiving = 0;
-		levelCount = 0;
-		Turrets.takenTiles = new boolean[100][100];
+		if(PlayerValues.players == 1){
+			l = new Level("/Levels/"+levelName);
+			PlayerValues.Money = Reference.StartingCash;
+			PlayerValues.lives = Reference.startingLives;
+			entities = new ArrayList<Entity>();
+			startWave = new StartWave(width - 190, height -100);
+			fastForward = new FastForward(width - 190, height - 100);
+			fastForward.setActive(false);
+			entities.add(fastForward);
+			entities.add(startWave);
+			inWave = false;
+			enemiesLiving = 0;
+			levelCount = 0;
+			Turrets.takenTiles = new boolean[100][100];
+		}else{
+			NetworkUtils.createObject(Level.class, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
+		}
 	}
 
 	@Override
 	public void render(Screen s) {
 		// TODO Auto-generated method stub
-		l.render(s);
-		ArrayList<Entity> entityTmp = (ArrayList<Entity>)entities.clone();
-		turretPanel.render(s);
-		for(Entity e : entityTmp){
-			e.render(s);
-		}
-		s.renderString(10, 10, Main.timer.fps + " fps, " + Main.timer.ups + " ups", Color.black, false);
-		if(selected != null){
-			selected.selectedRender(s);
-			info.render(s);
+		if(PlayerValues.players == 1){
+			l.render(s);
+			ArrayList<Entity> entityTmp = (ArrayList<Entity>)entities.clone();
+			turretPanel.render(s);
+			for(Entity e : entityTmp){
+				e.render(s);
+			}
+			s.renderString(10, 10, Main.timer.fps + " fps, " + Main.timer.ups + " ups", Color.black, false);
+			if(selected != null){
+				selected.selectedRender(s);
+				info.render(s);
+			}
+		}else{
+			if(selected != null){
+				selected.selectedRender(s);
+				info.render(s);
+			}
+			ArrayList<Entity> entityTmp = (ArrayList<Entity>)NetworkUtils.networkObjects.clone();
+			for(Entity e : entityTmp){
+				e.render(s);
+			}
+			ArrayList<Networked> entityTmp2 = (ArrayList<Networked>)NetworkUtils.myObjects.clone();
+			for(Networked e : entityTmp2){
+				e.render(s);
+			}
+			//System.out.println(NetworkUtils.myObjects.size());
+			turretPanel.render(s);
+			startWave.render(s);
 		}
 	}
 
@@ -91,7 +115,7 @@ public class GameScene extends Scene {
 			PlayerValues.Menu = 3;
 			Keyboard.keys[KeyEvent.VK_ESCAPE] = false;
 		}
-		if(PlayerValues.mode == 0){
+		if(PlayerValues.mode == 0 && PlayerValues.host){
 			if(inWave){
 				if(waveCount < waves && waveTimer <= 0){
 					if(spawnTimer <= 0 && enemyCount < eperwave){
@@ -133,9 +157,18 @@ public class GameScene extends Scene {
 				spawnTimer -= Reference.fixedTime;
 			}
 		}
-		ArrayList<Entity> entityTmp = (ArrayList<Entity>)entities.clone();
-		for(Entity e : entityTmp){
-			e.update();
+		if(PlayerValues.players == 1){
+			ArrayList<Entity> entityTmp = (ArrayList<Entity>)entities.clone();
+			for(Entity e : entityTmp){
+				e.update();
+			}
+		}else{
+			ArrayList<Networked> entityTmp = (ArrayList<Networked>)NetworkUtils.myObjects.clone();
+			for(Networked e : entityTmp){
+				e.update();
+				NetworkUtils.sendObject(e, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
+			}
+			startWave.update();
 		}
 		if(selected != null){
 			selected.selectedUpdate();

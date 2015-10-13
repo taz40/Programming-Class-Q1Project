@@ -1,6 +1,7 @@
 package com.samuel.programming.Q1.project.Panel;
 
 import io.brace.lightsoutgaming.engine.Entity;
+import io.brace.lightsoutgaming.engine.Network.NetworkUtils;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
 import io.brace.lightsoutgaming.engine.input.Mouse;
 
@@ -32,7 +33,11 @@ public class TurretPanel extends Panel {
 				int mx = ((Mouse.mouseX)/Reference.tileSize)*Reference.tileSize;
 				int my = (Mouse.mouseY/Reference.tileSize) * Reference.tileSize;
 				if(GameScene.l.sprites[mx/Reference.tileSize][my/Reference.tileSize] == Textures.Void && PlayerValues.Money >= Turrets.basic.cost && (!Turrets.takenTiles[mx/Reference.tileSize][my/Reference.tileSize])){
-					GameScene.entities.add((Entity) selected.clone());
+					if(PlayerValues.players == 1)
+						GameScene.entities.add((Entity) selected.clone());
+					else{
+						NetworkUtils.createObject(TurretBasic.class, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
+					}
 					PlayerValues.Money -= Turrets.basic.cost;
 					Turrets.takenTiles[mx/Reference.tileSize][my/Reference.tileSize] = true;
 				}else if(Turrets.takenTiles[mx/Reference.tileSize][my/Reference.tileSize]){

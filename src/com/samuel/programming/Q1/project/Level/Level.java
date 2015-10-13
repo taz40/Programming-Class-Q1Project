@@ -1,5 +1,6 @@
  package com.samuel.programming.Q1.project.Level;
 
+import io.brace.lightsoutgaming.engine.Network.Networked;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
 import io.brace.lightsoutgaming.engine.graphics.Sprite;
 import io.brace.lightsoutgaming.engine.graphics.SpriteSheet;
@@ -13,15 +14,21 @@ import javax.imageio.ImageIO;
 
 import com.samuel.programming.Q1.project.references.Textures;
 
-public class Level {
+public class Level extends Networked{
 	
 	String path;
 	public Sprite[][] sprites;
 	public int width, height;
 	public int spawnX, spawnY, endX, endY;
+	public boolean loaded = false;
 	
 	public Level(String path){
 		this.path = path;
+		loadLevel();
+	}
+	
+	public Level(){
+		path = "/Levels/Level1";
 		loadLevel();
 	}
 	
@@ -81,6 +88,28 @@ public class Level {
 				s.renderSprite(x*16*3, y*16*3, sprites[x][y], true);
 			}
 		}
+	}
+
+	@Override
+	public String[] send() {
+		// TODO Auto-generated method stub
+		return new String[] {path};
+	}
+
+	@Override
+	public void recv(String[] data) {
+		// TODO Auto-generated method stub
+		if(path != data[0]){
+			path = data[0];
+			loadLevel();
+			loaded = true;
+		}
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -13,4 +13,5 @@ public class PlayerValues {
 	public static LightsOut main;
 	public static int id = -1;
 	public static DatagramSocket socket;
+	public static boolean host = false;
 }

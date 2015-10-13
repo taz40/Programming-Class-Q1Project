@@ -6,8 +6,9 @@ import io.brace.lightsoutgaming.engine.input.Mouse;
 
 import javax.swing.JOptionPane;
 
+import com.samuel.programming.Q1.project.Scenes.GameScene;
+import com.samuel.programming.Q1.project.main.Main;
 import com.samuel.programming.Q1.project.references.PlayerValues;
-import com.samuel.programming.Q1.project.references.PlayerValuesSync;
 import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Textures;
 
@@ -58,6 +59,8 @@ public class Join extends Button {
 		if(PlayerValues.id != -1){
 			PlayerValues.Menu = 1;
 			Mouse.button = 0;
+			PlayerValues.host = false;
+			Main.game = new GameScene(Reference.width, Reference.height, "Level1");
 		}
 	}
 

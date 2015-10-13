@@ -4,6 +4,8 @@ import io.brace.lightsoutgaming.engine.Network.NetworkUtils;
 import io.brace.lightsoutgaming.engine.Network.Server;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
 
+import com.samuel.programming.Q1.project.Scenes.GameScene;
+import com.samuel.programming.Q1.project.main.Main;
 import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.PlayerValuesSync;
 import com.samuel.programming.Q1.project.references.Reference;
@@ -51,6 +53,8 @@ public class SurvivalMode extends Button {
 		}
 		PlayerValues.Menu = 1;
 		PlayerValues.mode = 1;
+		PlayerValues.host = true;
+		Main.game = new GameScene(Reference.width, Reference.height, "Level1");
 	}
 
 	@Override
