@@ -16,6 +16,7 @@ public class Reference {
 	public static final int StartingCash = 15000000;
 	public static final int startingLives = 100;
 	public static final float sellPercent = .65f;
+	public static final int port = 32;
 	public static class Fonts{
 		public static final Font ComicSans = new Font("comic sans ms", Font.PLAIN, 20);
 	}

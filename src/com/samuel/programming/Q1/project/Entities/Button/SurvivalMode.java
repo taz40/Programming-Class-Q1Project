@@ -1,8 +1,12 @@
 package com.samuel.programming.Q1.project.Entities.Button;
 
+import io.brace.lightsoutgaming.engine.Network.NetworkUtils;
+import io.brace.lightsoutgaming.engine.Network.Server;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
 
 import com.samuel.programming.Q1.project.references.PlayerValues;
+import com.samuel.programming.Q1.project.references.PlayerValuesSync;
+import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Textures;
 
 public class SurvivalMode extends Button {
@@ -39,6 +43,12 @@ public class SurvivalMode extends Button {
 	@Override
 	public void onMouseDown() {
 		// TODO Auto-generated method stub
+		if(PlayerValues.players == 2){
+			Server s = new Server(false, Reference.port, Reference.projectName+" "+Reference.version);
+			PlayerValues.socket = NetworkUtils.NetInit();
+			PlayerValues.id = NetworkUtils.connect("localhost", Reference.port, "User 1", Reference.projectName+" "+Reference.version, PlayerValues.socket, PlayerValues.main);
+			NetworkUtils.createObject(PlayerValuesSync.class, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
+		}
 		PlayerValues.Menu = 1;
 		PlayerValues.mode = 1;
 	}

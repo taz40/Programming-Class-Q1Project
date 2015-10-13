@@ -1,15 +1,16 @@
 package com.samuel.programming.Q1.project.main;
 
+import io.brace.lightsoutgaming.engine.LightsOut;
+
 import com.samuel.programming.Q1.project.Scenes.DifficultyMenu;
 import com.samuel.programming.Q1.project.Scenes.GameScene;
 import com.samuel.programming.Q1.project.Scenes.LostMenu;
 import com.samuel.programming.Q1.project.Scenes.MainMenu;
+import com.samuel.programming.Q1.project.Scenes.MultiplayerMenu;
 import com.samuel.programming.Q1.project.Scenes.PauseMenu;
 import com.samuel.programming.Q1.project.Utils.Timer;
 import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
-
-import io.brace.lightsoutgaming.engine.LightsOut;
 
 public class Main extends LightsOut {
 	
@@ -21,6 +22,7 @@ public class Main extends LightsOut {
 	MainMenu mainMenu = new MainMenu();
 	PauseMenu pauseMenu = new PauseMenu();
 	DifficultyMenu difficultyMenu = new DifficultyMenu();
+	MultiplayerMenu multimenu = new MultiplayerMenu();
 	
 	public static void main(String[] args){
 		new Main().init();
@@ -29,6 +31,7 @@ public class Main extends LightsOut {
 	protected void init() {
 		createDisplay(Reference.projectName + " v. " + Reference.version, width, height);
 		start();
+		PlayerValues.main = this;
 	}
 
 	protected void render() {
@@ -44,6 +47,8 @@ public class Main extends LightsOut {
 			pauseMenu.render(screen);
 		}else if(PlayerValues.Menu == 4){
 			difficultyMenu.render(screen);
+		}else if(PlayerValues.Menu == 5){
+			multimenu.render(screen);
 		}
 		show();
 		timer.render();
@@ -64,6 +69,8 @@ public class Main extends LightsOut {
 			pauseMenu.update();
 		}else if(PlayerValues.Menu == 4){
 			difficultyMenu.update();
+		}else if(PlayerValues.Menu == 5){
+			multimenu.update();
 		}
 		timer.update();
 	}

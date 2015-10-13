@@ -82,6 +82,8 @@ public class Textures {
 		public static Sprite upgrade = new Sprite(1,6,2,32,16,Textures.SpriteSheets.UI);
 		public static Sprite single = new Sprite(2, 6, 3, 32, 16, Textures.SpriteSheets.UI);
 		public static Sprite multi = new Sprite(3, 6, 3, 32, 16, Textures.SpriteSheets.UI);
+		public static Sprite host = new Sprite(0, 8, 3, 32, 16, Textures.SpriteSheets.UI);
+		public static Sprite join = new Sprite(1, 8, 3, 32, 16, Textures.SpriteSheets.UI);
 		
 		public static Sprite startWaveH = new Sprite(0,1,3,32,16,Textures.SpriteSheets.UI);
 		public static Sprite ffH = new Sprite(1,1,3,32,16,Textures.SpriteSheets.UI);
@@ -99,6 +101,8 @@ public class Textures {
 		public static Sprite upgradeH = new Sprite(1,7,2,32,16,Textures.SpriteSheets.UI);
 		public static Sprite singleH = new Sprite(2, 7, 3, 32, 16, Textures.SpriteSheets.UI);
 		public static Sprite multiH = new Sprite(3, 7, 3, 32, 16, Textures.SpriteSheets.UI);
+		public static Sprite hostH = new Sprite(0, 9, 3, 32, 16, Textures.SpriteSheets.UI);
+		public static Sprite joinH = new Sprite(1, 9, 3, 32, 16, Textures.SpriteSheets.UI);
 	}
 
 }

@@ -1,15 +1,15 @@
 package com.samuel.programming.Q1.project.Entities.Button;
 
-import com.samuel.programming.Q1.project.references.PlayerValues;
-import com.samuel.programming.Q1.project.references.Textures;
-
 import io.brace.lightsoutgaming.engine.graphics.Screen;
 import io.brace.lightsoutgaming.engine.input.Mouse;
 
-public class Multi extends Button {
+import com.samuel.programming.Q1.project.references.PlayerValues;
+import com.samuel.programming.Q1.project.references.Textures;
 
-	public Multi(int x, int y) {
-		super(x, y, Textures.UI.multi);
+public class Host extends Button {
+
+	public Host(int x, int y) {
+		super(x, y, Textures.UI.host);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -28,20 +28,19 @@ public class Multi extends Button {
 	@Override
 	public void onMouseEnter() {
 		// TODO Auto-generated method stub
-		sprite = Textures.UI.multiH;
+		sprite = Textures.UI.hostH;
 	}
 
 	@Override
 	public void onMouseExit() {
 		// TODO Auto-generated method stub
-		sprite = Textures.UI.multi;
+		sprite = Textures.UI.host;
 	}
 
 	@Override
 	public void onMouseDown() {
 		// TODO Auto-generated method stub
-		PlayerValues.players = 2;
-		PlayerValues.Menu = 5;
+		PlayerValues.Menu = 4;
 		Mouse.button = 0;
 		
 	}
