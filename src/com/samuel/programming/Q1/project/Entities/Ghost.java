@@ -113,15 +113,18 @@ public class Ghost extends Networked {
 	@Override
 	public String[] send() {
 		// TODO Auto-generated method stub
-		return new String[]{x+"", y+"", health+""};
+		return new String[]{x+"", y+"", health+"", tilesTraveled+""};
 	}
 
 	@Override
 	public void recv(String[] data) {
 		// TODO Auto-generated method stub
-		x = Integer.parseInt(data[0]);
-		y = Integer.parseInt(data[1]);
+		x = Float.parseFloat(data[0]);
+		y = Float.parseFloat(data[1]);
+		super.x = (int)x;
+		super.y = (int)y;
 		health = Integer.parseInt(data[2]);
+		tilesTraveled = Integer.parseInt(data[3]);
 	}
 
 }

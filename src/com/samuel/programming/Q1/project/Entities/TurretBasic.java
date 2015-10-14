@@ -1,12 +1,17 @@
 package com.samuel.programming.Q1.project.Entities;
 
 import io.brace.lightsoutgaming.engine.Entity;
+import io.brace.lightsoutgaming.engine.Network.NetworkUtils;
+import io.brace.lightsoutgaming.engine.Network.Networked;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
 import io.brace.lightsoutgaming.engine.graphics.Sprite;
 import io.brace.lightsoutgaming.engine.input.Mouse;
 
+import java.util.ArrayList;
+
 import com.samuel.programming.Q1.project.Entities.Projectiles.Bullet;
 import com.samuel.programming.Q1.project.Scenes.GameScene;
+import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Textures;
 import com.samuel.programming.Q1.project.references.Turrets;
@@ -30,46 +35,95 @@ public class TurretBasic extends Turret {
 
 	public void update() {
 		// TODO Auto-generated method stub
-		Ghost target = null;
-		if(this.targetMode == 0){
-			for(Entity e : GameScene.entities){
-				if(e instanceof Ghost){
-					if((target == null || ((Ghost)e).tilesTraveled > target.tilesTraveled) && distance(e) <= range)
-						target = (Ghost)e;
+		if(PlayerValues.players == 1){
+			Ghost target = null;
+			if(this.targetMode == 0){
+				for(Entity e : GameScene.entities){
+					if(e instanceof Ghost){
+						if((target == null || ((Ghost)e).tilesTraveled > target.tilesTraveled) && distance(e) <= range)
+							target = (Ghost)e;
+					}
+				}
+			}else if(targetMode == 1){
+				for(Entity e : GameScene.entities){
+					if(e instanceof Ghost){
+						if((target == null || ((Ghost)e).tilesTraveled < target.tilesTraveled) && distance(e) <= range)
+							target = (Ghost)e;
+					}
+				}
+			}else if(targetMode == 2){
+				for(Entity e : GameScene.entities){
+					if(e instanceof Ghost){
+						if((target == null || distance(e) < distance(target)) && distance(e) <= range)
+							target = (Ghost)e;
+					}
+				}
+			}else if(targetMode == 3){
+				for(Entity e : GameScene.entities){
+					if(e instanceof Ghost){
+						if((target == null || ((Ghost)e).health > target.health) && distance(e) <= range)
+							target = (Ghost)e;
+					}
 				}
 			}
-		}else if(targetMode == 1){
-			for(Entity e : GameScene.entities){
-				if(e instanceof Ghost){
-					if((target == null || ((Ghost)e).tilesTraveled < target.tilesTraveled) && distance(e) <= range)
-						target = (Ghost)e;
-				}
-			}
-		}else if(targetMode == 2){
-			for(Entity e : GameScene.entities){
-				if(e instanceof Ghost){
-					if((target == null || distance(e) < distance(target)) && distance(e) <= range)
-						target = (Ghost)e;
-				}
-			}
-		}else if(targetMode == 3){
-			for(Entity e : GameScene.entities){
-				if(e instanceof Ghost){
-					if((target == null || ((Ghost)e).health > target.health) && distance(e) <= range)
-						target = (Ghost)e;
-				}
-			}
-		}
-		if(target != null){
-			angle = Math.atan2((y+8*3)-(target.y+8*3), (x+8*3)-(target.x+8*3))+Math.PI;
-		}
-		if(timer <= 0){
 			if(target != null){
-				Shoot();
-				timer = coolDown;
+				angle = Math.atan2((y+8*3)-(target.y+8*3), (x+8*3)-(target.x+8*3))+Math.PI;
+			}
+			if(timer <= 0){
+				if(target != null){
+					Shoot();
+					timer = coolDown;
+				}
+			}else{
+				timer -= Reference.fixedTime;
 			}
 		}else{
-			timer -= Reference.fixedTime;
+			ArrayList<Networked> entities = new ArrayList<Networked>();
+			entities.addAll(NetworkUtils.networkObjects);
+			entities.addAll(NetworkUtils.myObjects);
+			Ghost target = null;
+			if(this.targetMode == 0){
+				for(Networked e : entities){
+					if(e.classname.equals(Ghost.class.getName())){
+						if((target == null || ((Ghost)e).tilesTraveled > target.tilesTraveled) && distance(e) <= range){
+							target = (Ghost)e;
+							System.out.println("found a target!");
+						}
+					}
+				}
+			}else if(targetMode == 1){
+				for(Networked e : entities){
+					if(e.classname.equals(Ghost.class.getName())){
+						if((target == null || ((Ghost)e).tilesTraveled < target.tilesTraveled) && distance(e) <= range)
+							target = (Ghost)e;
+					}
+				}
+			}else if(targetMode == 2){
+				for(Networked e : entities){
+					if(e.classname.equals(Ghost.class.getName())){
+						if((target == null || distance(e) < distance(target)) && distance(e) <= range)
+							target = (Ghost)e;
+					}
+				}
+			}else if(targetMode == 3){
+				for(Networked e : entities){
+					if(e.classname.equals(Ghost.class.getName())){
+						if((target == null || ((Ghost)e).health > target.health) && distance(e) <= range)
+							target = (Ghost)e;
+					}
+				}
+			}
+			if(target != null){
+				angle = Math.atan2((y+8*3)-(target.y+8*3), (x+8*3)-(target.x+8*3))+Math.PI;
+			}
+			if(timer <= 0){
+				if(target != null){
+					Shoot();
+					timer = coolDown;
+				}
+			}else{
+				timer -= Reference.fixedTime;
+			}
 		}
 	}
 
@@ -81,7 +135,25 @@ public class TurretBasic extends Turret {
 	}
 	
 	public void Shoot(){
-		GameScene.entities.add(new Bullet(x,y,speed * (float)Math.cos(angle),speed*(float)Math.sin(angle),(float)Math.toDegrees(angle), dmg, this));
+		if(PlayerValues.players == 1){
+			GameScene.entities.add(new Bullet(x,y,speed * (float)Math.cos(angle),speed*(float)Math.sin(angle),(float)Math.toDegrees(angle), dmg, this));
+		}else{
+			NetworkUtils.createObject(Bullet.class, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
+			try {
+				Thread.sleep(2);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Bullet b = (Bullet)NetworkUtils.myObjects.get(NetworkUtils.myObjects.size()-1);
+			b.x = x;
+			b.y = y;
+			b.mx = speed * (float)Math.cos(angle);
+			b.my = speed*(float)Math.sin(angle);
+			b.angle = (float)Math.toDegrees(angle);
+			b.dmg = (int) dmg;
+			b.srcTurret = this;
+		}
 	}
 
 	@Override
@@ -111,8 +183,7 @@ public class TurretBasic extends Turret {
 	@Override
 	public String[] send() {
 		// TODO Auto-generated method stub
-		System.out.println("sending update info");
-		return new String[]{x+"", y+""};
+		return new String[]{x+"", y+"", angle+""};
 	}
 
 	@Override
@@ -120,6 +191,6 @@ public class TurretBasic extends Turret {
 		// TODO Auto-generated method stub
 		x = Integer.parseInt(data[0]);
 		y = Integer.parseInt(data[1]);
-		System.out.println("Updated");
+		angle = Float.parseFloat(data[2]);
 	}
 }

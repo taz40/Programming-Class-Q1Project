@@ -76,9 +76,9 @@ public class Level extends Networked{
 			spawnY = Integer.parseInt(reader.readLine());
 			endX = Integer.parseInt(reader.readLine());
 			endY = Integer.parseInt(reader.readLine());
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	

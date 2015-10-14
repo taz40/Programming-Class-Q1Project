@@ -8,20 +8,20 @@ import io.brace.lightsoutgaming.engine.input.Keyboard;
 import io.brace.lightsoutgaming.engine.input.Mouse;
 
 import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Random;
 
 import com.samuel.programming.Q1.project.Entities.Ghost;
 import com.samuel.programming.Q1.project.Entities.Turret;
 import com.samuel.programming.Q1.project.Entities.Button.Button;
 import com.samuel.programming.Q1.project.Entities.Button.FastForward;
 import com.samuel.programming.Q1.project.Entities.Button.StartWave;
+import com.samuel.programming.Q1.project.Entities.Projectiles.Bullet;
 import com.samuel.programming.Q1.project.Level.Level;
 import com.samuel.programming.Q1.project.Panel.TurretInfoPanel;
 import com.samuel.programming.Q1.project.Panel.TurretPanel;
 import com.samuel.programming.Q1.project.main.Main;
-import com.samuel.programming.Q1.project.references.Enemies;
 import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Turrets;
@@ -70,7 +70,9 @@ public class GameScene extends Scene {
 			levelCount = 0;
 			Turrets.takenTiles = new boolean[100][100];
 		}else{
-			NetworkUtils.createObject(Level.class, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
+			if(PlayerValues.host){
+				NetworkUtils.createObject(Level.class, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
+			}
 		}
 	}
 
@@ -114,6 +116,25 @@ public class GameScene extends Scene {
 		if(Keyboard.getKey(KeyEvent.VK_ESCAPE)){
 			PlayerValues.Menu = 3;
 			Keyboard.keys[KeyEvent.VK_ESCAPE] = false;
+		}
+		if(PlayerValues.players == 2 && PlayerValues.host){
+			ArrayList<Networked> entities = new ArrayList<Networked>();
+			entities.addAll(NetworkUtils.myObjects);
+			entities.addAll(NetworkUtils.networkObjects);
+			for(Networked b1 : entities){
+				if(b1 instanceof Bullet){
+					Bullet b = (Bullet)b1;
+					for(Networked e : entities){
+						if(e instanceof Ghost){
+							Rectangle rect = new Rectangle((int)b.x, (int)b.y, Reference.tileSize, Reference.tileSize);
+							Rectangle rect2 = new Rectangle((int)e.x, (int)e.y, Reference.tileSize, Reference.tileSize);
+							if(rect.intersects(rect2)){
+								((Ghost) e).doDmg(b.dmg, b.srcTurret);
+							}
+						}
+					}
+				}
+			}
 		}
 		if(PlayerValues.mode == 0 && PlayerValues.host){
 			if(inWave){

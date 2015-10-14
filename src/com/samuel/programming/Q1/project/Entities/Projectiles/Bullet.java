@@ -1,6 +1,7 @@
 package com.samuel.programming.Q1.project.Entities.Projectiles;
 
 import io.brace.lightsoutgaming.engine.Entity;
+import io.brace.lightsoutgaming.engine.Network.Networked;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
 
 import java.awt.Rectangle;
@@ -12,15 +13,15 @@ import com.samuel.programming.Q1.project.Scenes.GameScene;
 import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Textures;
 
-public class Bullet extends Entity {
+public class Bullet extends Networked {
 	
-	float mx, my;
-	float angle;
-	float x, y;
+	public float mx, my;
+	public float angle;
+	public float x, y;
 	float timer = 0;
 	float lifeTime = 10;
-	int dmg;
-	Turret srcTurret;
+	public int dmg;
+	public Turret srcTurret;
 	
 	public Bullet(int x, int y, float mx, float my, float angle, float dmg, Turret src){
 		this.x = x;
@@ -30,6 +31,10 @@ public class Bullet extends Entity {
 		this.angle = angle;
 		this.dmg = (int)dmg;
 		srcTurret = src;
+	}
+	
+	public Bullet(){
+		this(0,0,0,0,0,0,null);
 	}
 
 	public void update() {
@@ -57,6 +62,20 @@ public class Bullet extends Entity {
 	public void render(Screen s) {
 		// TODO Auto-generated method stub
 		s.renderSprite((int)x, (int)y, Textures.Entities.Projectiles.bullet.rotate(angle), true);
+	}
+
+	@Override
+	public String[] send() {
+		// TODO Auto-generated method stub
+		return new String[]{x+"", y+"", angle+""};
+	}
+
+	@Override
+	public void recv(String[] data) {
+		// TODO Auto-generated method stub
+		x = Float.parseFloat(data[0]);
+		y = Float.parseFloat(data[1]);
+		angle = Float.parseFloat(data[2]);
 	}
 
 }
