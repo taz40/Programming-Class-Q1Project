@@ -81,7 +81,7 @@ public class TurretBasic extends Turret {
 	}
 	
 	public void Shoot(){
-		GameScene.entities.add(new Bullet(x,y,speed * (float)Math.cos(angle),speed*(float)Math.sin(angle),(float)Math.toDegrees(angle), dmg));
+		GameScene.entities.add(new Bullet(x,y,speed * (float)Math.cos(angle),speed*(float)Math.sin(angle),(float)Math.toDegrees(angle), dmg, this));
 	}
 
 	@Override
@@ -111,6 +111,7 @@ public class TurretBasic extends Turret {
 	@Override
 	public String[] send() {
 		// TODO Auto-generated method stub
+		System.out.println("sending update info");
 		return new String[]{x+"", y+""};
 	}
 
@@ -119,5 +120,6 @@ public class TurretBasic extends Turret {
 		// TODO Auto-generated method stub
 		x = Integer.parseInt(data[0]);
 		y = Integer.parseInt(data[1]);
+		System.out.println("Updated");
 	}
 }

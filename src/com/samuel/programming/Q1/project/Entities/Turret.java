@@ -9,6 +9,7 @@ public abstract class Turret extends Networked {
 	public float range, dmg, cost, upgradeCost;
 	public int level = 1;
 	public int targetMode = 0;
+	public int killAmount = 0;
 	
 	public Turret(int x, int y, float range, float dmg){
 		this.x = x;

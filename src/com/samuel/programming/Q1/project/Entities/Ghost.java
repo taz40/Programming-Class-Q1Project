@@ -1,7 +1,9 @@
 package com.samuel.programming.Q1.project.Entities;
 
-import io.brace.lightsoutgaming.engine.Entity;
+import io.brace.lightsoutgaming.engine.Network.Networked;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
+
+import java.util.Random;
 
 import com.samuel.programming.Q1.project.Level.Level;
 import com.samuel.programming.Q1.project.Scenes.GameScene;
@@ -10,7 +12,7 @@ import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Textures;
 
-public class Ghost extends Entity {
+public class Ghost extends Networked {
 	
 	public int tilesTraveled = 0;
 	
@@ -20,8 +22,13 @@ public class Ghost extends Entity {
 	float x, y;
 	float nextX, nextY;
 	public int health;
+	public Turret lastTurret;
 	
 	boolean passable[][];
+	
+	public Ghost(){
+		this(GameScene.l.spawnX, GameScene.l.spawnY, GameScene.l,Enemies.Ghost.health + ((GameScene.levelCount-1)*Enemies.Ghost.healthMod) + new Random().nextInt(21)-10);
+	}
 	
 	public Ghost(int x, int y, Level l, int health){
 		tileX = x;
@@ -40,8 +47,9 @@ public class Ghost extends Entity {
 		}
 	}
 	
-	public void doDmg(int amount){
+	public void doDmg(int amount, Turret t){
 		health -= amount;
+		lastTurret = t;
 	}
 
 	@Override
@@ -87,6 +95,7 @@ public class Ghost extends Entity {
 			GameScene.enemiesLiving--;
 			GameScene.entities.remove(this);
 			PlayerValues.Money += Enemies.Ghost.money;
+			lastTurret.killAmount++;
 		}
 		if(Math.abs((x/Reference.tileSize) - l.endX) <= .5 && Math.abs((y/Reference.tileSize) - l.endY) <= .5){
 			GameScene.enemiesLiving--;
@@ -99,6 +108,20 @@ public class Ghost extends Entity {
 	public void render(Screen s) {
 		// TODO Auto-generated method stub
 		s.renderSprite((int)x, (int)y, Textures.Enemies.ghost, true);
+	}
+
+	@Override
+	public String[] send() {
+		// TODO Auto-generated method stub
+		return new String[]{x+"", y+"", health+""};
+	}
+
+	@Override
+	public void recv(String[] data) {
+		// TODO Auto-generated method stub
+		x = Integer.parseInt(data[0]);
+		y = Integer.parseInt(data[1]);
+		health = Integer.parseInt(data[2]);
 	}
 
 }

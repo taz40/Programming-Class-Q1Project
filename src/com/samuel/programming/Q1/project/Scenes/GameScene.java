@@ -102,7 +102,7 @@ public class GameScene extends Scene {
 			for(Networked e : entityTmp2){
 				e.render(s);
 			}
-			//System.out.println(NetworkUtils.myObjects.size());
+			System.out.println(NetworkUtils.networkObjects.size());
 			turretPanel.render(s);
 			startWave.render(s);
 		}
@@ -119,8 +119,11 @@ public class GameScene extends Scene {
 			if(inWave){
 				if(waveCount < waves && waveTimer <= 0){
 					if(spawnTimer <= 0 && enemyCount < eperwave){
-						Ghost lastEnemy = new Ghost(l.spawnX, l.spawnY, l,Enemies.Ghost.health + ((levelCount-1)*Enemies.Ghost.healthMod) + new Random().nextInt(21)-10);
-						entities.add(lastEnemy);
+						Ghost lastEnemy = new Ghost();
+						if(PlayerValues.players == 1)
+							entities.add(lastEnemy);
+						else
+							NetworkUtils.createObject(Ghost.class, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
 						enemiesLiving++;
 						spawnTimer = timeBetweenSpawns;
 						enemyCount ++;
@@ -146,10 +149,13 @@ public class GameScene extends Scene {
 					}
 				}
 			}
-		}else if(PlayerValues.mode == 1 && inWave){
+		}else if(PlayerValues.mode == 1 && inWave && PlayerValues.host){
 			if(spawnTimer <= 0){
-				Ghost lastEnemy = new Ghost(l.spawnX, l.spawnY, l,Enemies.Ghost.health + ((enemyCount/20)*Enemies.Ghost.healthMod) + new Random().nextInt(21)-10);
-				entities.add(lastEnemy);
+				Ghost lastEnemy = new Ghost();
+				if(PlayerValues.players == 1)
+					entities.add(lastEnemy);
+				else
+					NetworkUtils.createObject(Ghost.class, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
 				enemiesLiving++;
 				spawnTimer = timeBetweenSpawns;
 				enemyCount ++;

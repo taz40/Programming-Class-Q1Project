@@ -41,6 +41,7 @@ public class TurretInfoPanel extends Panel {
 		s.renderSprite(0, Reference.height - 96, Textures.Panels.Info.bg, false);
 		s.renderString(0, Reference.height - 86, "Range: "+(GameScene.selected.range/Reference.tileSize), Color.WHITE, Reference.Fonts.ComicSans, false);
 		s.renderString(0, Reference.height - 61, "Dmg: "+GameScene.selected.dmg, Color.WHITE, Reference.Fonts.ComicSans, false);
+		s.renderString(360, Reference.height -60, "Kills: "+GameScene.selected.killAmount, Color.WHITE, Reference.Fonts.ComicSans, false);
 		sell.render(s);
 		first.render(s);
 		last.render(s);

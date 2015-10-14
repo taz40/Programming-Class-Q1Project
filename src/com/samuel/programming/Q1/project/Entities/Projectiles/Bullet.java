@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import com.samuel.programming.Q1.project.Entities.Ghost;
+import com.samuel.programming.Q1.project.Entities.Turret;
 import com.samuel.programming.Q1.project.Scenes.GameScene;
 import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Textures;
@@ -19,14 +20,16 @@ public class Bullet extends Entity {
 	float timer = 0;
 	float lifeTime = 10;
 	int dmg;
+	Turret srcTurret;
 	
-	public Bullet(int x, int y, float mx, float my, float angle, float dmg){
+	public Bullet(int x, int y, float mx, float my, float angle, float dmg, Turret src){
 		this.x = x;
 		this.y = y;
 		this.mx = mx;
 		this.my = my;
 		this.angle = angle;
 		this.dmg = (int)dmg;
+		srcTurret = src;
 	}
 
 	public void update() {
@@ -37,7 +40,7 @@ public class Bullet extends Entity {
 				Rectangle rect = new Rectangle((int)x, (int)y, Reference.tileSize, Reference.tileSize);
 				Rectangle rect2 = new Rectangle((int)e.x, (int)e.y, Reference.tileSize, Reference.tileSize);
 				if(rect.intersects(rect2)){
-					((Ghost) e).doDmg(dmg);
+					((Ghost) e).doDmg(dmg, srcTurret);
 					GameScene.entities.remove(this);
 				}
 			}
