@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 import com.samuel.programming.Q1.project.Entities.Ghost;
 import com.samuel.programming.Q1.project.Entities.Turret;
@@ -96,13 +97,17 @@ public class GameScene extends Scene {
 				selected.selectedRender(s);
 				info.render(s);
 			}
-			ArrayList<Entity> entityTmp = (ArrayList<Entity>)NetworkUtils.networkObjects.clone();
-			for(Entity e : entityTmp){
-				e.render(s);
+			try{
+				ArrayList<Entity> entityTmp = (ArrayList<Entity>)NetworkUtils.networkObjects.clone();
+				for(Entity e : entityTmp){
+					e.render(s);
+				}
+				ArrayList<Networked> entityTmp2 = (ArrayList<Networked>)NetworkUtils.myObjects.clone();
+				for(Networked e : entityTmp2){
+					e.render(s);
 			}
-			ArrayList<Networked> entityTmp2 = (ArrayList<Networked>)NetworkUtils.myObjects.clone();
-			for(Networked e : entityTmp2){
-				e.render(s);
+			}catch(ConcurrentModificationException e){
+				
 			}
 			System.out.println(NetworkUtils.networkObjects.size());
 			turretPanel.render(s);
@@ -130,6 +135,7 @@ public class GameScene extends Scene {
 							Rectangle rect2 = new Rectangle((int)e.x, (int)e.y, Reference.tileSize, Reference.tileSize);
 							if(rect.intersects(rect2)){
 								((Ghost) e).doDmg(b.dmg, b.srcTurret);
+								NetworkUtils.removeObject(b, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
 							}
 						}
 					}

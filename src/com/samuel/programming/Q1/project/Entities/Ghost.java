@@ -1,5 +1,6 @@
 package com.samuel.programming.Q1.project.Entities;
 
+import io.brace.lightsoutgaming.engine.Network.NetworkUtils;
 import io.brace.lightsoutgaming.engine.Network.Networked;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
 
@@ -93,14 +94,23 @@ public class Ghost extends Networked {
 		super.y = (int)y;
 		if(health <= 0){
 			GameScene.enemiesLiving--;
-			GameScene.entities.remove(this);
+			destroy();
 			PlayerValues.Money += Enemies.Ghost.money;
-			lastTurret.killAmount++;
+			if(lastTurret != null)
+				lastTurret.killAmount++;
 		}
 		if(Math.abs((x/Reference.tileSize) - l.endX) <= .5 && Math.abs((y/Reference.tileSize) - l.endY) <= .5){
 			GameScene.enemiesLiving--;
-			GameScene.entities.remove(this);
+			destroy();
 			PlayerValues.lives--;
+		}
+	}
+	
+	public void destroy(){
+		if(PlayerValues.players == 1){
+			GameScene.entities.remove(this);
+		}else{
+			NetworkUtils.removeObject(this, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
 		}
 	}
 

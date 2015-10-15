@@ -139,20 +139,26 @@ public class TurretBasic extends Turret {
 			GameScene.entities.add(new Bullet(x,y,speed * (float)Math.cos(angle),speed*(float)Math.sin(angle),(float)Math.toDegrees(angle), dmg, this));
 		}else{
 			NetworkUtils.createObject(Bullet.class, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
-			try {
-				Thread.sleep(2);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Bullet b = (Bullet)NetworkUtils.myObjects.get(NetworkUtils.myObjects.size()-1);
-			b.x = x;
-			b.y = y;
-			b.mx = speed * (float)Math.cos(angle);
-			b.my = speed*(float)Math.sin(angle);
-			b.angle = (float)Math.toDegrees(angle);
-			b.dmg = (int) dmg;
-			b.srcTurret = this;
+			final Turret instnace = this;
+			new Thread(){
+				public void run(){
+					while(!(NetworkUtils.myObjects.get(NetworkUtils.myObjects.size()-1) instanceof Bullet)){
+						try {
+							Thread.sleep(2);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+						}
+					}
+					Bullet b = (Bullet)NetworkUtils.myObjects.get(NetworkUtils.myObjects.size()-1);
+					b.x = x;
+					b.y = y;
+					b.mx = speed * (float)Math.cos(angle);
+					b.my = speed*(float)Math.sin(angle);
+					b.angle = (float)Math.toDegrees(angle);
+					b.dmg = (int) dmg;
+					b.srcTurret = instnace;
+				}
+			}.start();
 		}
 	}
 
