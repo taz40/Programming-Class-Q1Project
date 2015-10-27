@@ -17,7 +17,8 @@ public class MultiplayerDataSync extends Networked {
 	@Override
 	public void recv(String[] data) {
 		// TODO Auto-generated method stub
-		
+		inWave = Boolean.parseBoolean(data[0]);
+		ff = Boolean.parseBoolean(data[1]);
 	}
 
 	@Override
