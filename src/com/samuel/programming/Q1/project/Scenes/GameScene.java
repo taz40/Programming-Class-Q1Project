@@ -22,6 +22,7 @@ import com.samuel.programming.Q1.project.Entities.Projectiles.Bullet;
 import com.samuel.programming.Q1.project.Level.Level;
 import com.samuel.programming.Q1.project.Panel.TurretInfoPanel;
 import com.samuel.programming.Q1.project.Panel.TurretPanel;
+import com.samuel.programming.Q1.project.Utils.MultiplayerDataSync;
 import com.samuel.programming.Q1.project.main.Main;
 import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
@@ -73,6 +74,7 @@ public class GameScene extends Scene {
 		}else{
 			if(PlayerValues.host){
 				NetworkUtils.createObject(Level.class, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
+				NetworkUtils.createObject(MultiplayerDataSync.class, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
 			}
 		}
 	}
@@ -112,6 +114,7 @@ public class GameScene extends Scene {
 			System.out.println(NetworkUtils.networkObjects.size());
 			turretPanel.render(s);
 			startWave.render(s);
+			fastForward.render(s);
 		}
 	}
 
@@ -173,6 +176,10 @@ public class GameScene extends Scene {
 						inWave = false;
 						fastForward.setActive(false);
 						startWave.setActive(true);
+						if(PlayerValues.players == 2){
+							MultiplayerDataSync.inWave = false;
+							MultiplayerDataSync.ff = false;
+						}
 					}
 				}
 			}
@@ -202,6 +209,20 @@ public class GameScene extends Scene {
 				NetworkUtils.sendObject(e, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
 			}
 			startWave.update();
+			fastForward.update();
+			if(MultiplayerDataSync.ff){
+				Reference.fixedTime = Reference.fastTime;
+			}else{
+				Reference.fixedTime = Reference.fixedTimeConstant;
+			}
+			inWave = MultiplayerDataSync.inWave;
+			if(inWave){
+				fastForward.setActive(true);
+				startWave.setActive(false);
+			}else{
+				fastForward.setActive(false);
+				startWave.setActive(true);
+			}
 		}
 		if(selected != null){
 			selected.selectedUpdate();

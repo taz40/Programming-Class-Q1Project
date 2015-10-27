@@ -2,6 +2,8 @@ package com.samuel.programming.Q1.project.Entities.Button;
 
 import io.brace.lightsoutgaming.engine.graphics.Screen;
 
+import com.samuel.programming.Q1.project.Utils.MultiplayerDataSync;
+import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Textures;
 
@@ -43,6 +45,9 @@ public class FastForward extends Button {
 			Reference.fixedTime = Reference.fastTime;
 		}else{
 			Reference.fixedTime = Reference.fixedTimeConstant;
+		}
+		if(PlayerValues.players == 2){
+			MultiplayerDataSync.ff = Reference.fixedTime == Reference.fastTime;
 		}
 	}
 

@@ -34,7 +34,7 @@ public class Bullet extends Networked {
 	}
 	
 	public Bullet(){
-		this(0,0,0,0,0,0,null);
+		this(-100,-100,0,0,0,0,null);
 	}
 
 	public void update() {

@@ -1,6 +1,8 @@
 package com.samuel.programming.Q1.project.Entities.Button;
 
 import com.samuel.programming.Q1.project.Scenes.GameScene;
+import com.samuel.programming.Q1.project.Utils.MultiplayerDataSync;
+import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Textures;
 
@@ -54,6 +56,9 @@ public class StartWave extends Button {
 				//(5*level)-15*((level-1)/3);
 		GameScene.waves = 3+((level-1) % 4);
 				//((level-1)/3)+3;
+		if(PlayerValues.players == 2){
+			MultiplayerDataSync.inWave = true;
+		}
 	}
 
 	@Override
