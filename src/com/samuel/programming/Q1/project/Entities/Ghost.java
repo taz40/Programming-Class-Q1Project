@@ -24,6 +24,7 @@ public class Ghost extends Networked {
 	float nextX, nextY;
 	public int health;
 	public Turret lastTurret;
+	public boolean dead = false;
 	
 	boolean passable[][];
 	
@@ -92,21 +93,24 @@ public class Ghost extends Networked {
 		}
 		super.x = (int)x;
 		super.y = (int)y;
-		if(health <= 0){
-			GameScene.enemiesLiving--;
-			destroy();
-			PlayerValues.Money += Enemies.Ghost.money;
-			if(lastTurret != null)
-				lastTurret.killAmount++;
-		}
-		if(Math.abs((x/Reference.tileSize) - l.endX) <= .5 && Math.abs((y/Reference.tileSize) - l.endY) <= .5){
-			GameScene.enemiesLiving--;
-			destroy();
-			PlayerValues.lives--;
+		if(!dead){
+			if(health <= 0){
+				GameScene.enemiesLiving--;
+				destroy();
+				PlayerValues.Money += Enemies.Ghost.money;
+				if(lastTurret != null)
+					lastTurret.killAmount++;
+			}
+			if(Math.abs((x/Reference.tileSize) - l.endX) <= .5 && Math.abs((y/Reference.tileSize) - l.endY) <= .5){
+				GameScene.enemiesLiving--;
+				destroy();
+				PlayerValues.lives--;
+			}
 		}
 	}
 	
 	public void destroy(){
+		dead = true;
 		if(PlayerValues.players == 1){
 			GameScene.entities.remove(this);
 		}else{
