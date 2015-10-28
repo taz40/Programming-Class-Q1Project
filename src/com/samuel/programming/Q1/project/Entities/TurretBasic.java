@@ -89,7 +89,7 @@ public class TurretBasic extends Turret {
 					if(e.classname.equals(Ghost.class.getName())){
 						if((target == null || ((Ghost)e).tilesTraveled > target.tilesTraveled) && distance(e) <= range){
 							target = (Ghost)e;
-							System.out.println("found a target!");
+							//System.out.println("found a target!");
 						}
 					}
 				}
@@ -191,19 +191,24 @@ public class TurretBasic extends Turret {
 	@Override
 	public String[] send() {
 		// TODO Auto-generated method stub
-		return new String[]{x+"", y+"", angle+"", range+"", dmg+"", this.cost+"", this.upgradeCost+"", this.targetMode+""};
+		return new String[]{x+"", y+"", angle+"", range+"", dmg+"", this.cost+"", this.upgradeCost+"", this.targetMode+"", killAmount+""};
 	}
 
 	@Override
 	public void recv(String[] data) {
 		// TODO Auto-generated method stub
-		x = Integer.parseInt(data[0]);
-		y = Integer.parseInt(data[1]);
-		angle = Float.parseFloat(data[2]);
-		range = Float.parseFloat(data[3]);
-		dmg = Float.parseFloat(data[4]);
-		cost = Float.parseFloat(data[5]);
-		upgradeCost = Float.parseFloat(data[6]);
-		targetMode = Integer.parseInt(data[7]);
+		try{
+			x = Integer.parseInt(data[0]);
+			y = Integer.parseInt(data[1]);
+			angle = Float.parseFloat(data[2]);
+			range = Float.parseFloat(data[3]);
+			dmg = Float.parseFloat(data[4]);
+			cost = Float.parseFloat(data[5]);
+			upgradeCost = Float.parseFloat(data[6]);
+			targetMode = Integer.parseInt(data[7]);
+			killAmount = Integer.parseInt(data[8]);
+		}catch(Exception e){
+			
+		}
 	}
 }

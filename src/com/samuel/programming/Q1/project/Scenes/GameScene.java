@@ -100,14 +100,20 @@ public class GameScene extends Scene {
 				info.render(s);
 			}
 			try{
-				ArrayList<Entity> entityTmp = (ArrayList<Entity>)NetworkUtils.networkObjects.clone();
-				for(Entity e : entityTmp){
+				
+				ArrayList<Networked> entities = new ArrayList<Networked>();
+				
+				if(PlayerValues.host){
+					entities.addAll(NetworkUtils.myObjects);
+					entities.addAll(NetworkUtils.networkObjects);
+				}else{
+					entities.addAll(NetworkUtils.networkObjects);
+					entities.addAll(NetworkUtils.myObjects);
+				}
+				
+				for(Entity e : entities){
 					e.render(s);
 				}
-				ArrayList<Networked> entityTmp2 = (ArrayList<Networked>)NetworkUtils.myObjects.clone();
-				for(Networked e : entityTmp2){
-					e.render(s);
-			}
 			}catch(ConcurrentModificationException e){
 				
 			}
@@ -115,7 +121,6 @@ public class GameScene extends Scene {
 				selected.selectedRender(s);
 				info.render(s);
 			}
-			System.out.println(NetworkUtils.networkObjects.size());
 			turretPanel.render(s);
 			startWave.render(s);
 			fastForward.render(s);
@@ -141,9 +146,10 @@ public class GameScene extends Scene {
 						if(e instanceof Ghost){
 							Rectangle rect = new Rectangle((int)b.x, (int)b.y, Reference.tileSize, Reference.tileSize);
 							Rectangle rect2 = new Rectangle((int)e.x, (int)e.y, Reference.tileSize, Reference.tileSize);
-							if(rect.intersects(rect2)){
+							if(rect.intersects(rect2) && !b.dead){
 								((Ghost) e).doDmg(b.dmg, b.srcTurret);
 								NetworkUtils.removeObject(b, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
+								b.dead = true;
 							}
 						}
 					}
@@ -228,6 +234,26 @@ public class GameScene extends Scene {
 				fastForward.setActive(false);
 				startWave.setActive(true);
 			}
+			
+			ArrayList<Networked> entities = new ArrayList<Networked>();
+			entities.addAll(NetworkUtils.myObjects);
+			entities.addAll(NetworkUtils.networkObjects);
+			for(Networked b1 : entities){
+				if(b1 instanceof Bullet){
+					Bullet b = (Bullet)b1;
+					for(Networked e : entities){
+						if(e instanceof Ghost){
+							Rectangle rect = new Rectangle((int)b.x, (int)b.y, Reference.tileSize, Reference.tileSize);
+							Rectangle rect2 = new Rectangle((int)e.x, (int)e.y, Reference.tileSize, Reference.tileSize);
+							if(rect.intersects(rect2) && b.srcTurret != null && !b.hit && ((Ghost)e).health <= b.dmg){
+								b.srcTurret.killAmount++;
+								b.hit = true;
+							}
+						}
+					}
+				}
+			}
+			
 		}
 		if(selected != null){
 			selected.selectedUpdate();

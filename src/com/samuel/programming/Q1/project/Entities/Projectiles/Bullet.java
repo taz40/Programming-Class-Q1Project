@@ -1,6 +1,7 @@
 package com.samuel.programming.Q1.project.Entities.Projectiles;
 
 import io.brace.lightsoutgaming.engine.Entity;
+import io.brace.lightsoutgaming.engine.Network.NetworkUtils;
 import io.brace.lightsoutgaming.engine.Network.Networked;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
 
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import com.samuel.programming.Q1.project.Entities.Ghost;
 import com.samuel.programming.Q1.project.Entities.Turret;
 import com.samuel.programming.Q1.project.Scenes.GameScene;
+import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Textures;
 
@@ -22,6 +24,8 @@ public class Bullet extends Networked {
 	float lifeTime = 10;
 	public int dmg;
 	public Turret srcTurret;
+	public boolean hit;
+	public boolean dead;
 	
 	public Bullet(int x, int y, float mx, float my, float angle, float dmg, Turret src){
 		this.x = x;
@@ -51,7 +55,11 @@ public class Bullet extends Networked {
 			}
 		}
 		if(timer >= lifeTime){
-			GameScene.entities.remove(this);
+			if(PlayerValues.players == 1){
+				GameScene.entities.remove(this);
+			}else{
+				NetworkUtils.removeObject(this, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
+			}
 		}else{
 			timer += Reference.fixedTime;
 		}
@@ -73,10 +81,14 @@ public class Bullet extends Networked {
 	@Override
 	public void recv(String[] data) {
 		// TODO Auto-generated method stub
-		x = Float.parseFloat(data[0]);
-		y = Float.parseFloat(data[1]);
-		angle = Float.parseFloat(data[2]);
-		dmg = Integer.parseInt(data[3]);
+		try{
+			x = Float.parseFloat(data[0]);
+			y = Float.parseFloat(data[1]);
+			angle = Float.parseFloat(data[2]);
+			dmg = Integer.parseInt(data[3]);
+		}catch(Exception e){
+			
+		}
 	}
 
 }

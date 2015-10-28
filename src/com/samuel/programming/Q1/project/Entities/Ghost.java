@@ -98,7 +98,7 @@ public class Ghost extends Networked {
 				GameScene.enemiesLiving--;
 				destroy();
 				PlayerValues.Money += Enemies.Ghost.money;
-				if(lastTurret != null)
+				if(lastTurret != null && PlayerValues.players == 1)
 					lastTurret.killAmount++;
 			}
 			if(Math.abs((x/Reference.tileSize) - l.endX) <= .5 && Math.abs((y/Reference.tileSize) - l.endY) <= .5){
@@ -106,6 +106,8 @@ public class Ghost extends Networked {
 				destroy();
 				PlayerValues.lives--;
 			}
+		}else{
+			destroy();
 		}
 	}
 	
