@@ -215,45 +215,48 @@ public class GameScene extends Scene {
 			}
 		}else{
 			ArrayList<Networked> entityTmp = (ArrayList<Networked>)NetworkUtils.myObjects.clone();
-			for(Networked e : entityTmp){
-				e.update();
-				NetworkUtils.sendObject(e, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
-			}
-			startWave.update();
-			fastForward.update();
-			if(MultiplayerDataSync.ff){
-				Reference.fixedTime = Reference.fastTime;
-			}else{
-				Reference.fixedTime = Reference.fixedTimeConstant;
-			}
-			inWave = MultiplayerDataSync.inWave;
-			if(inWave){
-				fastForward.setActive(true);
-				startWave.setActive(false);
-			}else{
-				fastForward.setActive(false);
-				startWave.setActive(true);
-			}
-			
-			ArrayList<Networked> entities = new ArrayList<Networked>();
-			entities.addAll(NetworkUtils.myObjects);
-			entities.addAll(NetworkUtils.networkObjects);
-			for(Networked b1 : entities){
-				if(b1 instanceof Bullet){
-					Bullet b = (Bullet)b1;
-					for(Networked e : entities){
-						if(e instanceof Ghost){
-							Rectangle rect = new Rectangle((int)b.x, (int)b.y, Reference.tileSize, Reference.tileSize);
-							Rectangle rect2 = new Rectangle((int)e.x, (int)e.y, Reference.tileSize, Reference.tileSize);
-							if(rect.intersects(rect2) && b.srcTurret != null && !b.hit && ((Ghost)e).health <= b.dmg){
-								b.srcTurret.killAmount++;
-								b.hit = true;
+			try{
+				for(Networked e : entityTmp){
+					e.update();
+					NetworkUtils.sendObject(e, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
+				}
+				startWave.update();
+				fastForward.update();
+				if(MultiplayerDataSync.ff){
+					Reference.fixedTime = Reference.fastTime;
+				}else{
+					Reference.fixedTime = Reference.fixedTimeConstant;
+				}
+				inWave = MultiplayerDataSync.inWave;
+				if(inWave){
+					fastForward.setActive(true);
+					startWave.setActive(false);
+				}else{
+					fastForward.setActive(false);
+					startWave.setActive(true);
+				}
+				
+				ArrayList<Networked> entities = new ArrayList<Networked>();
+				entities.addAll(NetworkUtils.myObjects);
+				entities.addAll(NetworkUtils.networkObjects);
+				for(Networked b1 : entities){
+					if(b1 instanceof Bullet){
+						Bullet b = (Bullet)b1;
+						for(Networked e : entities){
+							if(e instanceof Ghost){
+								Rectangle rect = new Rectangle((int)b.x, (int)b.y, Reference.tileSize, Reference.tileSize);
+								Rectangle rect2 = new Rectangle((int)e.x, (int)e.y, Reference.tileSize, Reference.tileSize);
+								if(rect.intersects(rect2) && b.srcTurret != null && !b.hit && ((Ghost)e).health <= b.dmg){
+									b.srcTurret.killAmount++;
+									b.hit = true;
+								}
 							}
 						}
 					}
 				}
+			}catch(Exception e){
+				
 			}
-			
 		}
 		if(selected != null){
 			selected.selectedUpdate();
