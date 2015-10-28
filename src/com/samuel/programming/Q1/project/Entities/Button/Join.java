@@ -55,7 +55,7 @@ public class Join extends Button {
                 null,
                 "");
 		PlayerValues.socket = NetworkUtils.NetInit();
-		PlayerValues.id = NetworkUtils.connect("localhost", Reference.port, "User 1", Reference.projectName+" "+Reference.version, PlayerValues.socket, PlayerValues.main);
+		PlayerValues.id = NetworkUtils.connect(s, Reference.port, "User 1", Reference.projectName+" "+Reference.version, PlayerValues.socket, PlayerValues.main);
 		if(PlayerValues.id != -1){
 			PlayerValues.Menu = 1;
 			Mouse.button = 0;

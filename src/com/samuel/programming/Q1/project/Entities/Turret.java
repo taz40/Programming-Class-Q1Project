@@ -11,6 +11,10 @@ public abstract class Turret extends Networked {
 	public int targetMode = 0;
 	public int killAmount = 0;
 	
+	public boolean isMine(){
+		return ismine;
+	}
+	
 	public Turret(int x, int y, float range, float dmg){
 		this.x = x;
 		this.y = y;

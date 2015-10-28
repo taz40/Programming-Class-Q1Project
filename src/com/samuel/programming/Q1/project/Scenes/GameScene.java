@@ -111,10 +111,15 @@ public class GameScene extends Scene {
 			}catch(ConcurrentModificationException e){
 				
 			}
+			if(selected != null){
+				selected.selectedRender(s);
+				info.render(s);
+			}
 			System.out.println(NetworkUtils.networkObjects.size());
 			turretPanel.render(s);
 			startWave.render(s);
 			fastForward.render(s);
+			s.renderString(10, 10, Main.timer.fps + " fps, " + Main.timer.ups + " ups", Color.black, false);
 		}
 	}
 
@@ -231,12 +236,32 @@ public class GameScene extends Scene {
 		if(Mouse.button == 1 && !click && turretPanel.selected == null && (selected == null || Mouse.mouseY <= Reference.height - 96)){
 			click = true;
 			selected = null;
-			for(Entity e : entities){
-				if(e instanceof Turret && Mouse.clickX >= e.x && Mouse.clickX <= e.x+Reference.tileSize && Mouse.clickY >= e.y && Mouse.clickY <= e.y+Reference.tileSize){
-					selected = (Turret) e;
-					break;
+			
+			if(PlayerValues.players == 1){
+			
+				for(Entity e : entities){
+					if(e instanceof Turret && Mouse.clickX >= e.x && Mouse.clickX <= e.x+Reference.tileSize && Mouse.clickY >= e.y && Mouse.clickY <= e.y+Reference.tileSize){
+						selected = (Turret) e;
+						break;
+					}
+				}
+			
+			}else{
+				for(Entity e : NetworkUtils.myObjects){
+					if(e instanceof Turret && Mouse.clickX >= e.x && Mouse.clickX <= e.x+Reference.tileSize && Mouse.clickY >= e.y && Mouse.clickY <= e.y+Reference.tileSize){
+						selected = (Turret) e;
+						break;
+					}
+				}
+				
+				for(Entity e : NetworkUtils.networkObjects){
+					if(e instanceof Turret && Mouse.clickX >= e.x && Mouse.clickX <= e.x+Reference.tileSize && Mouse.clickY >= e.y && Mouse.clickY <= e.y+Reference.tileSize){
+						selected = (Turret) e;
+						break;
+					}
 				}
 			}
+			
 		}else if(Mouse.button == 0){
 			click = false;
 		}

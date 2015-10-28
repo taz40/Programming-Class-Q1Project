@@ -31,6 +31,8 @@ public class TurretBasic extends Turret {
 	
 	public TurretBasic(){
 		super(((Mouse.mouseX)/Reference.tileSize)*Reference.tileSize, (Mouse.mouseY/Reference.tileSize) * Reference.tileSize, Turrets.basic.range*Reference.tileSize, Turrets.basic.dmg);
+		cost = Reference.sellPercent*Turrets.basic.cost;
+		upgradeCost = Turrets.basic.startingUpgradeCost;
 	}
 
 	public void update() {
@@ -189,7 +191,7 @@ public class TurretBasic extends Turret {
 	@Override
 	public String[] send() {
 		// TODO Auto-generated method stub
-		return new String[]{x+"", y+"", angle+""};
+		return new String[]{x+"", y+"", angle+"", range+"", dmg+"", this.cost+"", this.upgradeCost+"", this.targetMode+""};
 	}
 
 	@Override
@@ -198,5 +200,10 @@ public class TurretBasic extends Turret {
 		x = Integer.parseInt(data[0]);
 		y = Integer.parseInt(data[1]);
 		angle = Float.parseFloat(data[2]);
+		range = Float.parseFloat(data[3]);
+		dmg = Float.parseFloat(data[4]);
+		cost = Float.parseFloat(data[5]);
+		upgradeCost = Float.parseFloat(data[6]);
+		targetMode = Integer.parseInt(data[7]);
 	}
 }

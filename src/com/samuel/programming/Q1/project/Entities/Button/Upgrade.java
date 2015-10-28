@@ -44,9 +44,11 @@ public class Upgrade extends Button {
 	public void onMouseDown() {
 		// TODO Auto-generated method stub
 		if(PlayerValues.Money >= GameScene.selected.upgradeCost){
-			PlayerValues.Money -= GameScene.selected.upgradeCost;
-			GameScene.selected.cost += Reference.sellPercent*GameScene.selected.upgradeCost;
-			GameScene.selected.upgrade();
+			if((PlayerValues.players == 2 && GameScene.selected.isMine()) || PlayerValues.players == 1){
+				PlayerValues.Money -= GameScene.selected.upgradeCost;
+				GameScene.selected.cost += Reference.sellPercent*GameScene.selected.upgradeCost;
+				GameScene.selected.upgrade();
+			}
 		}
 	}
 

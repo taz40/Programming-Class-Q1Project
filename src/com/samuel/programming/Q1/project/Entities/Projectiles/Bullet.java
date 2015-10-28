@@ -67,7 +67,7 @@ public class Bullet extends Networked {
 	@Override
 	public String[] send() {
 		// TODO Auto-generated method stub
-		return new String[]{x+"", y+"", angle+""};
+		return new String[]{x+"", y+"", angle+"", dmg+""};
 	}
 
 	@Override
@@ -76,6 +76,7 @@ public class Bullet extends Networked {
 		x = Float.parseFloat(data[0]);
 		y = Float.parseFloat(data[1]);
 		angle = Float.parseFloat(data[2]);
+		dmg = Integer.parseInt(data[3]);
 	}
 
 }
