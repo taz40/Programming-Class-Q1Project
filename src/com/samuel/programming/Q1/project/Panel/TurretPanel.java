@@ -11,6 +11,7 @@ import java.awt.Font;
 import com.samuel.programming.Q1.project.Entities.Turret;
 import com.samuel.programming.Q1.project.Entities.TurretBasic;
 import com.samuel.programming.Q1.project.Scenes.GameScene;
+import com.samuel.programming.Q1.project.Utils.MultiplayerDataSyncClient;
 import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Textures;
@@ -37,6 +38,9 @@ public class TurretPanel extends Panel {
 						GameScene.entities.add((Entity) selected.clone());
 					else{
 						NetworkUtils.createObject(TurretBasic.class, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
+						if(!PlayerValues.host){
+							MultiplayerDataSyncClient.moneydiff -= Turrets.basic.cost;
+						}
 					}
 					PlayerValues.Money -= Turrets.basic.cost;
 					Turrets.takenTiles[mx/Reference.tileSize][my/Reference.tileSize] = true;

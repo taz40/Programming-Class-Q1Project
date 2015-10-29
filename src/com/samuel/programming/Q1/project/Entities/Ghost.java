@@ -8,6 +8,7 @@ import java.util.Random;
 
 import com.samuel.programming.Q1.project.Level.Level;
 import com.samuel.programming.Q1.project.Scenes.GameScene;
+import com.samuel.programming.Q1.project.Utils.MultiplayerDataSync;
 import com.samuel.programming.Q1.project.references.Enemies;
 import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
@@ -98,6 +99,8 @@ public class Ghost extends Networked {
 				GameScene.enemiesLiving--;
 				destroy();
 				PlayerValues.Money += Enemies.Ghost.money;
+				if(PlayerValues.players == 2)
+					MultiplayerDataSync.moneydiff += Enemies.Ghost.money;
 				if(lastTurret != null && PlayerValues.players == 1)
 					lastTurret.killAmount++;
 			}

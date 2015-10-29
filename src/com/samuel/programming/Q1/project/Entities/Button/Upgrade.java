@@ -3,6 +3,7 @@ package com.samuel.programming.Q1.project.Entities.Button;
 import io.brace.lightsoutgaming.engine.graphics.Screen;
 
 import com.samuel.programming.Q1.project.Scenes.GameScene;
+import com.samuel.programming.Q1.project.Utils.MultiplayerDataSyncClient;
 import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
 import com.samuel.programming.Q1.project.references.Textures;
@@ -47,6 +48,9 @@ public class Upgrade extends Button {
 			if((PlayerValues.players == 2 && GameScene.selected.isMine()) || PlayerValues.players == 1){
 				PlayerValues.Money -= GameScene.selected.upgradeCost;
 				GameScene.selected.cost += Reference.sellPercent*GameScene.selected.upgradeCost;
+				if(PlayerValues.players == 2 && !PlayerValues.host){
+					MultiplayerDataSyncClient.moneydiff -= GameScene.selected.upgradeCost;
+				}
 				GameScene.selected.upgrade();
 			}
 		}

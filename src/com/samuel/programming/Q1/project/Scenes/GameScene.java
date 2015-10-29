@@ -23,6 +23,7 @@ import com.samuel.programming.Q1.project.Level.Level;
 import com.samuel.programming.Q1.project.Panel.TurretInfoPanel;
 import com.samuel.programming.Q1.project.Panel.TurretPanel;
 import com.samuel.programming.Q1.project.Utils.MultiplayerDataSync;
+import com.samuel.programming.Q1.project.Utils.MultiplayerDataSyncClient;
 import com.samuel.programming.Q1.project.main.Main;
 import com.samuel.programming.Q1.project.references.PlayerValues;
 import com.samuel.programming.Q1.project.references.Reference;
@@ -57,9 +58,11 @@ public class GameScene extends Scene {
 	public GameScene(int width, int height, String levelName){
 		this.width = width;
 		this.height = height;
+		PlayerValues.Money = Reference.StartingCash;
+		if(PlayerValues.mode == 1)
+			PlayerValues.Money *= 2;
 		if(PlayerValues.players == 1){
 			l = new Level("/Levels/"+levelName);
-			PlayerValues.Money = Reference.StartingCash;
 			PlayerValues.lives = Reference.startingLives;
 			entities = new ArrayList<Entity>();
 			startWave = new StartWave(width - 190, height -100);
@@ -75,6 +78,8 @@ public class GameScene extends Scene {
 			if(PlayerValues.host){
 				NetworkUtils.createObject(Level.class, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
 				NetworkUtils.createObject(MultiplayerDataSync.class, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
+			}else{
+				NetworkUtils.createObject(MultiplayerDataSyncClient.class, NetworkUtils.serverIP, Reference.port, PlayerValues.socket);
 			}
 		}
 	}
@@ -187,9 +192,11 @@ public class GameScene extends Scene {
 						inWave = false;
 						fastForward.setActive(false);
 						startWave.setActive(true);
+						PlayerValues.Money += Reference.moneyPerRound;
 						if(PlayerValues.players == 2){
 							MultiplayerDataSync.inWave = false;
 							MultiplayerDataSync.ff = false;
+							MultiplayerDataSync.moneydiff += Reference.moneyPerRound;
 						}
 					}
 				}
